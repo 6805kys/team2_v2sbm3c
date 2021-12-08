@@ -12,6 +12,7 @@
 <body>
   <DIV style="margin: 50px;">
       <H1>team2 깃 테스트</H1>
+      <H1>git ignore test</H1>
   </DIV> 
 </body>
 </html>
