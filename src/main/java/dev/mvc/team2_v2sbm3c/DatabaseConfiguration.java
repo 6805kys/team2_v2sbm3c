@@ -2,6 +2,7 @@ package dev.mvc.team2_v2sbm3c;
 
 import javax.sql.DataSource;
 
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -52,6 +53,5 @@ public class DatabaseConfiguration {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }
-
 
 
