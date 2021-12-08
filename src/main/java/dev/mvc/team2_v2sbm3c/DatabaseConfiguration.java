@@ -2,6 +2,7 @@ package dev.mvc.team2_v2sbm3c;
 
 import javax.sql.DataSource;
 
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -18,7 +19,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")  // 설정 파일 위치
-@MapperScan(basePackages= {"dev.mvc.team2"})
+@MapperScan(basePackages= {"dev.mvc.team2_v2sbm3c"})
 public class DatabaseConfiguration {
     
     @Autowired
