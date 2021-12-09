@@ -53,5 +53,8 @@ public class DatabaseConfiguration {
     }
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> d67cecb71f34d93b5e1df212105127a49dc401b1

@@ -12,6 +12,10 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 **/application.properties
+<<<<<<< HEAD
+=======
+
+>>>>>>> d67cecb71f34d93b5e1df212105127a49dc401b1
 
 ### IntelliJ IDEA ###
 .idea
