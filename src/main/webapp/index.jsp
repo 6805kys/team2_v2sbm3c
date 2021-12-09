@@ -14,6 +14,7 @@
       <H1>team2 깃 테스트</H1>
       <H1>git ignore test</H1>
       <H1>git ignore test2</H1>
+      <H1>재영님 성현님 test</H1>
   </DIV> 
 </body>
 </html>
