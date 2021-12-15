@@ -16,6 +16,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY memberno ASC
   </select>
   
+  <!-- id 중복 체크 -->
+  <select id="checkID" resultType="int" parameterType="String">
+    SELECT COUNT(id) as cnt
+    FROM member
+    WHERE id=#{id}
+  </select>
+  
+  <!-- nickname 중복 체크 -->
+  <select id="checkNICKNAME" resultType="int" parameterType="String">
+    SELECT COUNT(nickname) as cnt
+    FROM member
+    WHERE nickname=#{nickname}
+  </select>
+    
   <!-- memberno로 회원 정보 조회 -->
   <select id="read" resultType="dev.mvc.member.MemberVO" parameterType="int">
     SELECT memberno, id, passwd, nickname, tel, mdate, gradeno

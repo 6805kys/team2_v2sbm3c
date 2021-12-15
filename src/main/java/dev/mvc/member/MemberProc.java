@@ -17,5 +17,17 @@ public class MemberProc implements MemberProcInter  {
       int cnt = this.memberDAO.create(memberVO);
       return cnt;
     }
+    
+    @Override
+    public int checkID(String id) {
+      int cnt = this.memberDAO.checkID(id);
+      return cnt;
+    }
+    
+    @Override
+    public int checkNICKNAME(String nickname) {
+      int cnt = this.memberDAO.checkNICKNAME(nickname);
+      return cnt;
+    }
 
 }

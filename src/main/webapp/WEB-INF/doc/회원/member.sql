@@ -14,7 +14,7 @@ CREATE TABLE member (
   memberno NUMBER(10) NOT NULL, -- 회원 번호, 레코드를 구분하는 컬럼 
   id             VARCHAR(20)   NOT NULL UNIQUE, -- 아이디, 중복 안됨, 레코드를 구분 
   passwd      VARCHAR(60)   NOT NULL, -- 패스워드, 영숫자 조합
-  nickname   VARCHAR(30)   NOT NULL, -- 성명, 한글 10자 저장 가능
+  nickname   VARCHAR(30)   NOT NULL, -- 닉네임 10자 저장 가능
   tel            VARCHAR(15)   NOT NULL, -- 전화번호
   mdate       DATE             NOT NULL, -- 가입일    
   gradeno     NUMBER(10)     NOT NULL, -- 등급(씨앗, 밀, 빵, 파트너회원 등)
@@ -77,6 +77,25 @@ WHERE memberno = 4;
 SELECT memberno, id, passwd, nickname, tel, mdate, gradeno
 FROM member
 WHERE id = 'user1';
+  
+  2) id 중복 확인
+SELECT COUNT(id) as cnt
+FROM member
+WHERE id='user1';
+
+ 3) nickname 중복 확인
+SELECT COUNT(nickname) as cnt
+FROM member
+WHERE nickname='빵덕1';
+ 
+CNT
+------
+   0   ← 중복 되지 않음.
+CNT
+------
+   1   ← 중복 됨.
+
+
   
   4. 수정
 UPDATE member 
