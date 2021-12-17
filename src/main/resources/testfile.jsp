@@ -11,6 +11,6 @@
 </style>
 </head>
 <body>
-      <span class="span_success">성공기원 </span>
+      <span class="span_success"> new local & remote branch test </span>
 </body>
 </html>
