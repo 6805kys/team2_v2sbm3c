@@ -7,13 +7,16 @@ CREATE TABLE member_info (
   memberno NUMBER(10) NOT NULL,
   taste1 VARCHAR(20)     NOT NULL,
   taste2 VARCHAR(20)     NOT NULL,
-  FOREIGN KEY (MEMBERNO) REFERENCES member(MEMBERNO)
+  surveyno NUMBER(10)  NULL ,
+  FOREIGN KEY (MEMBERNO) REFERENCES member(MEMBERNO),
+  FOREIGN KEY (SURVEYNO) REFERENCES survey(SURVEYNO)
 );
 
 COMMENT ON TABLE member_info is '회원상세';
 COMMENT ON COLUMN MEMBER_INFO.MEMBERNO is '회원번호';
 COMMENT ON COLUMN MEMBER_INFO.TASTE1 is '취향1';
 COMMENT ON COLUMN MEMBER_INFO.TASTE2 is '취향2';
+COMMENT ON COLUMN MEMBER_INFO.surveyno is '설문조사 번호';
 
 DROP SEQUENCE member_info_seq;
 CREATE SEQUENCE member_info_seq
@@ -29,33 +32,41 @@ commit;
   1. 등록
   
 -- 개인 회원 left join
-INSERT INTO member_info(taste1, taste2)
-VALUES (member_seq.nextval, 'user1', '1234', '회원1', '000-0000-0000', sysdate, 10);
+--INSERT INTO member_info(taste1, taste2)
+--VALUES (member_seq.nextval, 'user1', '1234', '회원1', '000-0000-0000', sysdate, 10);
  
-INSERT INTO member(memberno, id, passwd, nickname, tel, gradeno)
-VALUES (member_seq.nextval, 'user2', '1234', '회원2', '000-0000-0000', sysdate, 10);
+--INSERT INTO member(memberno, id, passwd, nickname, tel, gradeno)
+--VALUES (member_seq.nextval, 'user2', '1234', '회원2', '000-0000-0000', sysdate, 10);
  
-INSERT INTO member(memberno, id, passwd, nickname, tel, gradeno)
-VALUES (member_seq.nextval, 'user3', '1234', '회원3', '000-0000-0000', sysdate, 10);
+--INSERT INTO member(memberno, id, passwd, nickname, tel, gradeno)
+--VALUES (member_seq.nextval, 'user3', '1234', '회원3', '000-0000-0000', sysdate, 10);
+-- 조인 관련 개념 추가 필요
+-- 1. 등록
+  
+-- 
+INSERT INTO member_info(memberno, taste1, taste2, surveyno)
+VALUES (3, '가성비', '양', 1);
  
+INSERT INTO member_info(memberno, taste1, taste2, surveyno)
+VALUES (4, '비건', '식사대용', 1);
+
+INSERT INTO member_info(memberno, taste1, taste2, surveyno)
+VALUES (5, '단맛', '짠맛', 1);
 
 COMMIT;
 
 
   2. 목록
-SELECT memberno, taste1, taste2
+SELECT memberno, taste1, taste2, surveyno
 FROM member_info
 ORDER BY memberno ASC;
 
   3. 조회
-  1) user1 정보 보기
-SELECT memberno, id, passwd, nickname, tel, mdate, gradeno
+  1) 취향 정보 보기
+SELECT memberno, taste1, taste2, surveyno
 FROM member_info
-WHERE memberno = 1;
+WHERE memberno = 3;
 
-SELECT memberno, id, passwd, nickname, tel, mdate, gradeno
-FROM member_info
-WHERE id = 'user1';
   
   4. 수정
 UPDATE member_info 

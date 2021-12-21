@@ -1,11 +1,11 @@
 -- 테이블 구조
--- member 삭제전에 FK가 선언된 blog 테이블 먼저 삭제합니다.
+-- member 삭제전에 FK가 선언된 테이블 먼저 삭제합니다.
 DROP TABLE survey;
 DROP TABLE member_auth;
-DROP TABLE grade;
+DROP TABLE grade; -- member drop 후에 가능
 DROP TABLE member_info;
-DROP TABLE brcomment;
-DROP TABLE brcontent;
+--DROP TABLE brcomment;
+--DROP TABLE brcontent;
 DROP TABLE member;
 -- 제약 조건과 함께 삭제(제약 조건이 있어도 삭제됨, 권장하지 않음.)
 DROP TABLE member CASCADE CONSTRAINTS; 
@@ -16,6 +16,7 @@ CREATE TABLE member (
   passwd      VARCHAR(60)   NOT NULL, -- 패스워드, 영숫자 조합
   nickname   VARCHAR(30)   NOT NULL, -- 닉네임 10자 저장 가능
   tel            VARCHAR(15)   NOT NULL, -- 전화번호
+  email        VARCHAR(50)   NOT NULL, -- 이메일
   mdate       DATE             NOT NULL, -- 가입일    
   gradeno     NUMBER(10)     NOT NULL, -- 등급(씨앗, 밀, 빵, 파트너회원 등)
   PRIMARY KEY (memberno),                     -- 한번 등록된 값은 중복 안됨
@@ -28,6 +29,7 @@ COMMENT ON COLUMN MEMBER.ID is '아이디';
 COMMENT ON COLUMN MEMBER.PASSWD is '패스워드';
 COMMENT ON COLUMN MEMBER.NICKNAME is '닉네임';
 COMMENT ON COLUMN MEMBER.TEL is '전화번호';
+COMMENT ON COLUMN MEMBER.EMAIL is '이메일';
 COMMENT ON COLUMN MEMBER.MDATE is '가입일';
 COMMENT ON COLUMN MEMBER.GRADENO is '등급번호';
 
@@ -43,38 +45,38 @@ COMMIT;
 
   1. 등록
 -- 회원 관리용 계정, Q/A 용 계정
-INSERT INTO member(memberno, id, passwd, nickname, tel, mdate, gradeno)
-VALUES (member_seq.nextval, 'manager1', '1234', '회원관리 매니저', '000-0000-0000', sysdate, 1);
+INSERT INTO member(memberno, id, passwd, nickname, tel, email, mdate, gradeno)
+VALUES (member_seq.nextval, 'manager1', '1234', '회원관리 매니저', '000-0000-0000', 'Insert@Email.address', sysdate, 1);
 -- 게시판 관리자
-INSERT INTO member(memberno, id, passwd, nickname, tel, mdate, gradeno)
-VALUES (member_seq.nextval, 'manager2', '1234', '게시판 매니저', '000-0000-0000', sysdate, 1);
+INSERT INTO member(memberno, id, passwd, nickname, tel, email, mdate, gradeno)
+VALUES (member_seq.nextval, 'manager2', '1234', '게시판 매니저', '000-0000-0000', 'Insert@Email.address', sysdate, 1);
   
 -- 개인 회원 테스트 계정
-INSERT INTO member(memberno, id, passwd, nickname, tel, mdate, gradeno)
-VALUES (member_seq.nextval, 'user1', '1234', '회원1', '000-0000-0000', sysdate, 10);
+INSERT INTO member(memberno, id, passwd, nickname, tel, email, mdate, gradeno)
+VALUES (member_seq.nextval, 'user1', '1234', '회원1', '000-0000-0000', 'Insert@Email.address', sysdate, 10);
  
-INSERT INTO member(memberno, id, passwd, nickname, tel, mdate, gradeno)
-VALUES (member_seq.nextval, 'user2', '1234', '회원2', '000-0000-0000', sysdate, 10);
+INSERT INTO member(memberno, id, passwd, nickname, tel, email, mdate, gradeno)
+VALUES (member_seq.nextval, 'user2', '1234', '회원2', '000-0000-0000', 'Insert@Email.address', sysdate, 10);
  
-INSERT INTO member(memberno, id, passwd, nickname, tel, mdate, gradeno)
-VALUES (member_seq.nextval, 'user3', '1234', '회원3', '000-0000-0000', sysdate, 10);
+INSERT INTO member(memberno, id, passwd, nickname, tel, email, mdate, gradeno)
+VALUES (member_seq.nextval, 'user3', '1234', '회원3', '000-0000-0000', 'Insert@Email.address', sysdate, 10);
  
 
 COMMIT;
 
 
   2. 목록
-SELECT memberno, id, passwd, nickname, tel, mdate, gradeno
+SELECT memberno, id, passwd, nickname, tel, email, mdate, gradeno
 FROM member
 ORDER BY memberno ASC;
 
   3. 조회
   1) user1 정보 보기
-SELECT memberno, id, passwd, nickname, tel, mdate, gradeno
+SELECT memberno, id, passwd, nickname, tel, email, mdate, gradeno
 FROM member
 WHERE memberno = 4;
 
-SELECT memberno, id, passwd, nickname, tel, mdate, gradeno
+SELECT memberno, id, passwd, nickname, tel, email, mdate, gradeno
 FROM member
 WHERE id = 'user1';
   
@@ -99,7 +101,7 @@ CNT
   
   4. 수정
 UPDATE member 
-SET nickname='빵덕1', tel='111-1111-1111', gradeno=20
+SET nickname='빵덕1', tel='111-1111-1111', email='email@bpg.com', gradeno=20
 WHERE memberno=4;
 
 COMMIT;  
