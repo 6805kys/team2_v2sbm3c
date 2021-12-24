@@ -37,6 +37,12 @@ VALUES(20, '밀');
 INSERT INTO grade(gradeno, gradename)
 VALUES(30, '빵');
 
+INSERT INTO grade(gradeno, gradename)
+VALUES(101, '파트너');
+
+INSERT INTO grade(gradeno, gradename)
+VALUES(999, '비회원');
+
 SELECT gradeno, gradename FROM grade ORDER BY gradeno ASC;
 
 COMMIT;

@@ -77,18 +77,19 @@
                     </java.beans.PropertyChangeSupport>
                   </listeners>
                   <constraint>
-                    <height>58</height>
+                    <height>100</height>
                     <width>136</width>
                     <x>973</x>
-                    <y>212</y>
+                    <y>170</y>
                   </constraint>
                   <sourceConnections/>
                   <targetConnections>
                     <net.java.amateras.db.visual.model.AnchorModel reference="../../.."/>
                   </targetConnections>
-                  <content>일반회원:씨앗-&gt;밀-&gt;빵&#xd;
+                  <content>비회원&#xd;
+일반회원:씨앗-&gt;밀-&gt;빵&#xd;
 - 등업(자동, 수동)&#xd;
-파트너회원:</content>
+파트너</content>
                 </target>
               </net.java.amateras.db.visual.model.AnchorModel>
             </sourceConnections>
@@ -552,8 +553,8 @@
                                 </java.beans.PropertyChangeSupport>
                               </listeners>
                               <constraint>
-                                <height>45</height>
-                                <width>121</width>
+                                <height>30</height>
+                                <width>122</width>
                                 <x>390</x>
                                 <y>36</y>
                               </constraint>
@@ -1647,6 +1648,40 @@
         </net.java.amateras.db.visual.model.ForeignKeyModel>
         <net.java.amateras.db.visual.model.ForeignKeyModel reference="../net.java.amateras.db.visual.model.ForeignKeyModel[3]/source/sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel[2]/target/sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel"/>
         <net.java.amateras.db.visual.model.ForeignKeyModel reference="../net.java.amateras.db.visual.model.ForeignKeyModel[2]/source/sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel/target/sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel[3]"/>
+        <net.java.amateras.db.visual.model.AnchorModel>
+          <listeners serialization="custom">
+            <java.beans.PropertyChangeSupport>
+              <default>
+                <source class="net.java.amateras.db.visual.model.AnchorModel" reference="../../../.."/>
+                <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+              </default>
+              <null/>
+            </java.beans.PropertyChangeSupport>
+          </listeners>
+          <source class="net.java.amateras.db.visual.model.NoteModel">
+            <listeners serialization="custom">
+              <java.beans.PropertyChangeSupport>
+                <default>
+                  <source class="net.java.amateras.db.visual.model.NoteModel" reference="../../../.."/>
+                  <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                </default>
+                <null/>
+              </java.beans.PropertyChangeSupport>
+            </listeners>
+            <constraint>
+              <height>38</height>
+              <width>117</width>
+              <x>724</x>
+              <y>268</y>
+            </constraint>
+            <sourceConnections>
+              <net.java.amateras.db.visual.model.AnchorModel reference="../../.."/>
+            </sourceConnections>
+            <targetConnections/>
+            <content>비회원도 등급번호999로 저장</content>
+          </source>
+          <target class="net.java.amateras.db.visual.model.TableModel" reference="../../.."/>
+        </net.java.amateras.db.visual.model.AnchorModel>
       </targetConnections>
       <error></error>
       <linkedPath></linkedPath>
@@ -1783,6 +1818,7 @@
     <net.java.amateras.db.visual.model.NoteModel reference="../net.java.amateras.db.visual.model.TableModel/sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel/target/sourceConnections/net.java.amateras.db.visual.model.AnchorModel/target"/>
     <net.java.amateras.db.visual.model.NoteModel reference="../net.java.amateras.db.visual.model.TableModel/targetConnections/net.java.amateras.db.visual.model.ForeignKeyModel/source/sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel[2]/target/sourceConnections/net.java.amateras.db.visual.model.AnchorModel/target"/>
     <net.java.amateras.db.visual.model.NoteModel reference="../net.java.amateras.db.visual.model.TableModel/targetConnections/net.java.amateras.db.visual.model.ForeignKeyModel[2]/source/sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel/target/sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel/target/sourceConnections/net.java.amateras.db.visual.model.AnchorModel/target"/>
+    <net.java.amateras.db.visual.model.NoteModel reference="../net.java.amateras.db.visual.model.TableModel/targetConnections/net.java.amateras.db.visual.model.AnchorModel/source"/>
   </children>
   <dommains/>
   <dialectName>hsqldb</dialectName>
