@@ -26,6 +26,8 @@ CREATE SEQUENCE breadgrp_seq
 INSERT INTO breadgrp(breadgrpno, breadgrp)
 VALUES (breadgrp_seq.nextval, '팥류');
 
+COMMIT;
+
 -- R(List)
 SELECT breadgrpno, breadgrp FROM breadgrp ORDER BY breadgrpno;
       

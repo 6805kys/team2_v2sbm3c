@@ -5,22 +5,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace = "dev.mvc.member.MemberDAOInter">
 
-  <insert id="create" parameterType="dev.mvc.member.MemberVO">
-    INSERT INTO member(memberno, id, passwd, nickname, tel, mdate, gradeno)
-    VALUES (member_seq.nextval, #{id}, #{passwd}, #{nickname}, #{tel}, sysdate, #{gradeno})
-  </insert>
-  
-  <select id="list" resultType="dev.mvc.member.MemberVO">
-    SELECT memberno, id, passwd, nickname, tel, mdate, gradeno
-    FROM member
-    ORDER BY memberno ASC
-  </select>
-  
   <!-- id 중복 체크 -->
   <select id="checkID" resultType="int" parameterType="String">
     SELECT COUNT(id) as cnt
     FROM member
     WHERE id=#{id}
+  </select>
+
+  <insert id="create" parameterType="dev.mvc.member.MemberVO">
+    INSERT INTO member(memberno, id, passwd, nickname, tel, email, mdate, gradeno)
+    VALUES (member_seq.nextval, #{id}, #{passwd}, #{nickname}, #{tel}, #{email}, sysdate, #{gradeno})
+  </insert>
+  
+  <select id="list" resultType="dev.mvc.member.MemberVO">
+    SELECT memberno, id, passwd, nickname, tel, email, mdate, gradeno
+    FROM member
+    ORDER BY memberno ASC
   </select>
   
   <!-- nickname 중복 체크 -->
@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
   <!-- memberno로 회원 정보 조회 -->
   <select id="read" resultType="dev.mvc.member.MemberVO" parameterType="int">
-    SELECT memberno, id, passwd, nickname, tel, mdate, gradeno
+    SELECT memberno, id, passwd, nickname, tel, email, mdate, gradeno
     FROM member
     WHERE memberno = #{memberno}
   </select>  
@@ -46,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <update id="update" parameterType="dev.mvc.member.MemberVO">
     UPDATE member 
-    SET nickname=#{nickname}, tel=#{tel}, gradeno=#{gradeno}
+    SET nickname=#{nickname}, tel=#{tel}, email=#{email}, gradeno=#{gradeno}
     WHERE memberno=#{memberno}
   </update>
   
@@ -77,4 +77,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
 
 
-</mapper> 
+</mapper>

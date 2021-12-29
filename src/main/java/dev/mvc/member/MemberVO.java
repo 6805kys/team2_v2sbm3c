@@ -7,6 +7,7 @@ public class MemberVO {
     passwd      VARCHAR(60)   NOT NULL, -- 패스워드, 영숫자 조합
     nickname   VARCHAR(30)   NOT NULL, -- 성명, 한글 10자 저장 가능
     tel            VARCHAR(15)   NOT NULL, -- 전화번호
+    email        VARCHAR(50)   NOT NULL, -- 이메일
     mdate       DATE             NOT NULL, -- 가입일    
     gradeno     NUMBER(10)     NOT NULL, -- 등급(씨앗, 밀, 빵, 파트너회원 등)
     PRIMARY KEY (memberno),                     -- 한번 등록된 값은 중복 안됨
@@ -22,6 +23,8 @@ public class MemberVO {
     private String nickname = "";
     /** 전화 번호 */
     private String tel = "";
+    /** 이메일 */
+    private String email = "";
     /** 가입일 */
     private String mdate = "";
     /** 등급 번호 */
@@ -56,6 +59,12 @@ public class MemberVO {
     }
     public void setTel(String tel) {
         this.tel = tel;
+    }
+    public String getEmail() {
+    return email;
+    }
+    public void setEmail(String email) {
+    this.email = email;
     }
     public String getMdate() {
         return mdate;
