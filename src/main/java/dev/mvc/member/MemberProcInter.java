@@ -2,6 +2,7 @@ package dev.mvc.member;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface MemberProcInter {
     /**
@@ -72,5 +73,10 @@ public interface MemberProcInter {
      * @return 변경된 패스워드 갯수
      */
     public int passwd_update(HashMap<Object, Object> map);
+    
+    /**
+     * 로그인 처리
+     */
+    public int login(Map<String, Object> map);
 
 }

@@ -2,6 +2,9 @@ package dev.mvc.member;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -226,67 +229,132 @@ public class MemberCont {
        
        return mav;
      }
-     
-     /**
-      * 패스워드를 변경
-      * @param memberno
-      * @return
-      */
-     @RequestMapping(value="/member/passwd_update.do", method=RequestMethod.GET)
-     public ModelAndView passwd_update(int memberno){
-       ModelAndView mav = new ModelAndView();
-       mav.setViewName("/member/passwd_update"); // passwd_update.jsp
-       
-       return mav;
-     }
-     
-     /**
-      * 패스워드 변경 처리
-      * @param memberno 회원 번호
-      * @param current_passwd 현재 패스워드
-      * @param new_passwd 새로운 패스워드
-      * http://localhost:9091/member/passwd_update.do?memberno=6
-      * @return
-      */
-     @RequestMapping(value="/member/passwd_update.do", method=RequestMethod.POST)
-     public ModelAndView passwd_update(int memberno, String current_passwd, String new_passwd){
-       ModelAndView mav = new ModelAndView();
-       
-       MemberVO memberVO = this.memberProc.read(memberno);
-       mav.addObject("nickname", memberVO.getNickname());  // 회원4님(user4) 패스워드를 변경했습니다.
-       mav.addObject("id", memberVO.getId());
-       
-       // 현재 패스워드 검사
-       HashMap<Object, Object> map = new HashMap<Object, Object>();
-       map.put("memberno", memberno);
-       map.put("passwd", current_passwd);
-       
-       int cnt = memberProc.passwd_check(map);
-       int update_cnt = 0; // 변경된 패스워드 수
-       
-       if (cnt == 1) { // 현재 패스워드가 일치하는 경우
-         map.put("passwd", new_passwd); // 새로운 패스워드를 저장
-         update_cnt = memberProc.passwd_update(map); // 패스워드 변경 처리
+          
+       /**
+        * 패스워드를 변경합니다.
+        * @param memberno
+        * @return
+        */
+       @RequestMapping(value="/member/passwd_update.do", method=RequestMethod.GET)
+       public ModelAndView passwd_update(int memberno){
+         ModelAndView mav = new ModelAndView();
+         mav.setViewName("/member/passwd_update"); // passwd_update.jsp
          
-         if (update_cnt == 1) {
-           mav.addObject("code", "passwd_update_success"); // 패스워드 변경 성공
+         return mav;
+       }
+       
+       /**
+        * 패스워드 변경 처리
+        * @param memberno 회원 번호
+        * @param current_passwd 현재 패스워드
+        * @param new_passwd 새로운 패스워드
+        * http://localhost:9091/member/passwd_update.do?memberno=6
+        * @return
+        */
+       @RequestMapping(value="/member/passwd_update.do", method=RequestMethod.POST)
+       public ModelAndView passwd_update(int memberno, String current_passwd, String new_passwd){
+         ModelAndView mav = new ModelAndView();
+         
+         MemberVO memberVO = this.memberProc.read(memberno);
+         mav.addObject("nickname", memberVO.getNickname());  // 회원4님(user4) 패스워드를 변경했습니다.
+         mav.addObject("id", memberVO.getId());
+         
+         // 현재 패스워드 검사
+         HashMap<Object, Object> map = new HashMap<Object, Object>();
+         map.put("memberno", memberno);
+         map.put("passwd", current_passwd);
+         
+         int cnt = memberProc.passwd_check(map);
+         int update_cnt = 0; // 변경된 패스워드 수
+         
+         if (cnt == 1) { // 현재 패스워드가 일치하는 경우
+           map.put("passwd", new_passwd); // 새로운 패스워드를 저장
+           update_cnt = memberProc.passwd_update(map); // 패스워드 변경 처리
+           
+           if (update_cnt == 1) {
+             mav.addObject("code", "passwd_update_success"); // 패스워드 변경 성공
+           } else {
+             cnt = 0;  // 패스워드는 일치했으나 변경하지는 못함.
+             mav.addObject("code", "passwd_update_fail");       // 패스워드 변경 실패
+           }
+           
+           mav.addObject("update_cnt", update_cnt);  // 변경된 패스워드의 갯수    
          } else {
-           cnt = 0;  // 패스워드는 일치했으나 변경하지는 못함.
-           mav.addObject("code", "passwd_update_fail");       // 패스워드 변경 실패
+           mav.addObject("code", "passwd_fail"); // 패스워드가 일치하지 않는 경우
          }
+
+         mav.addObject("cnt", cnt); // 패스워드 일치 여부
+         mav.addObject("url", "/member/msg");  // /member/msg -> /member/msg.jsp
          
-         mav.addObject("update_cnt", update_cnt);  // 변경된 패스워드의 갯수    
-       } else {
-         mav.addObject("code", "passwd_fail"); // 패스워드가 일치하지 않는 경우
+         mav.setViewName("redirect:/member/msg.do");
+         
+         return mav;
+       }
+       
+       /**
+        * 로그인 폼
+        * @return
+        */
+       // http://localhost:9091/member/login.do 
+       @RequestMapping(value = "/member/login.do", 
+                                  method = RequestMethod.GET)
+       public ModelAndView login() {
+         ModelAndView mav = new ModelAndView();
+       
+         mav.setViewName("/member/login_form");
+         return mav;
        }
 
-       mav.addObject("cnt", cnt); // 패스워드 일치 여부
-       mav.addObject("url", "/member/msg");  // /member/msg -> /member/msg.jsp
+       /**
+        * 로그인 처리
+        * @return
+        */
+       // http://localhost:9091/member/login.do 
+       @RequestMapping(value = "/member/login.do", 
+                                  method = RequestMethod.POST)
+       public ModelAndView login_proc(HttpSession session,
+                                                        String id, 
+                                                        String passwd) {
+         ModelAndView mav = new ModelAndView();
+         Map<String, Object> map = new HashMap<String, Object>();
+         map.put("id", id);
+         map.put("passwd", passwd);
+         
+         int count = memberProc.login(map); // id, passwd 일치 여부 확인
+         if (count == 1) { // 로그인 성공
+           // System.out.println(id + " 로그인 성공");
+           MemberVO memberVO = memberProc.readById(id); // 로그인한 회원의 정보 조회
+           session.setAttribute("memberno", memberVO.getMemberno());
+           session.setAttribute("id", id);
+           session.setAttribute("nickname", memberVO.getNickname());
+           
+           mav.setViewName("redirect:/index.do"); // 시작 페이지로 이동  
+         } else {
+           mav.addObject("url", "/member/login_fail_msg"); // login_fail_msg.jsp, redirect parameter 적용
+          
+           mav.setViewName("redirect:/member/msg.do"); // 새로고침 방지
+         }
+             
+         return mav;
+       }
        
-       mav.setViewName("redirect:/member/msg.do");
-       
-       return mav;
-     }
+       /**
+        * 로그아웃 처리
+        * @param session
+        * @return
+        */
+       @RequestMapping(value="/member/logout.do", 
+                                  method=RequestMethod.GET)
+       public ModelAndView logout(HttpSession session){
+         ModelAndView mav = new ModelAndView();
+         session.invalidate(); // 모든 session 변수 삭제
+         
+         mav.addObject("url", "/member/logout_msg"); // logout_msg.jsp, redirect parameter 적용
+         
+         mav.setViewName("redirect:/member/msg.do"); // 새로고침 방지
+         
+         return mav;
+       }
     
     
 

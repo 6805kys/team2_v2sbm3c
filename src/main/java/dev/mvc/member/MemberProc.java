@@ -2,6 +2,7 @@ package dev.mvc.member;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -72,6 +73,12 @@ public class MemberProc implements MemberProcInter  {
     @Override
     public int passwd_update(HashMap<Object, Object> map) {
       int cnt = this.memberDAO.passwd_update(map);
+      return cnt;
+    }
+    
+    @Override
+    public int login(Map<String, Object> map) {
+      int cnt = this.memberDAO.login(map);
       return cnt;
     }
     
