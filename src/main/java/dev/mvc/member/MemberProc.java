@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -63,7 +65,7 @@ public class MemberProc implements MemberProcInter  {
       int cnt = this.memberDAO.delete(memberno);
       return cnt;
     }
-   
+    
     @Override
     public int passwd_check(HashMap<Object, Object> map) {
       int cnt = this.memberDAO.passwd_check(map);
@@ -75,12 +77,52 @@ public class MemberProc implements MemberProcInter  {
       int cnt = this.memberDAO.passwd_update(map);
       return cnt;
     }
-    
+   
     @Override
     public int login(Map<String, Object> map) {
       int cnt = this.memberDAO.login(map);
       return cnt;
     }
+    
+    @Override
+    public boolean isMember(HttpSession session){
+      boolean sw = false; // 로그인하지 않은 것으로 초기화
+      int gradeno = 999;
+      
+      // System.out.println("-> gradeno: " + session.getAttribute("gradeno"));
+      if (session != null) {
+        String id = (String)session.getAttribute("id");
+        if (session.getAttribute("gradeno") != null) {
+          gradeno = (int)session.getAttribute("gradeno");
+        }
+        
+        if (id != null && gradeno <= 199){ // 관리자 + 회원 + 파트너
+          sw = true;  // 로그인 한 경우
+        }
+      }
+      
+      return sw;
+    }
+
+    @Override
+    public boolean isAdmin(HttpSession session) {
+      boolean sw = false; // 로그인하지 않은 것으로 초기화
+      int gradeno = 999;
+      
+      // System.out.println("-> gradeno: " + session.getAttribute("gradeno"));
+      if (session != null) {
+        String id = (String)session.getAttribute("id");
+        if (session.getAttribute("gradeno") != null) {
+            gradeno = (int)session.getAttribute("gradeno");
+        }
+        
+        if (id != null && gradeno <= 9){ // 커뮤니티 관리자
+          sw = true;  // 로그인 한 경우
+        }
+      }
+      
+      return sw;
+    }  
     
 
 

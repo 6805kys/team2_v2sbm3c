@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 public interface MemberProcInter {
     /**
      * 회원 가입
@@ -78,5 +80,19 @@ public interface MemberProcInter {
      * 로그인 처리
      */
     public int login(Map<String, Object> map);
+    
+    /**
+     * 로그인된 회원 계정인지 검사합니다.
+     * @param session
+     * @return true: 관리자
+     */
+    public boolean isMember(HttpSession session);   
+
+    /**
+     * 로그인된 관리자인지 검사합니다.
+     * @param session
+     * @return true: 관리자
+     */
+    public boolean isAdmin(HttpSession session);   
 
 }

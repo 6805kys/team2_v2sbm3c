@@ -125,22 +125,22 @@ public class MemberCont {
       return mav; // forward
     }
     
-    /**
-     * 목록 출력
-     * @param session
-     * @return
-     */
-     @RequestMapping(value="/member/list.do", method=RequestMethod.GET)
-     public ModelAndView list() {
-       ModelAndView mav = new ModelAndView();
-       
-       List<MemberVO> list = memberProc.list();
-       mav.addObject("list", list);
-
-       mav.setViewName("/member/list"); // /webapp/WEB-INF/views/member/list.jsp
-       
-       return mav;
-     }
+//    /**
+//     * 목록 출력
+//     * @param session
+//     * @return
+//     */
+//     @RequestMapping(value="/member/list.do", method=RequestMethod.GET)
+//     public ModelAndView list() {
+//       ModelAndView mav = new ModelAndView();
+//       
+//       List<MemberVO> list = memberProc.list();
+//       mav.addObject("list", list);
+//
+//       mav.setViewName("/member/list"); // /webapp/WEB-INF/views/member/list.jsp
+//       
+//       return mav;
+//     }
      
      /**
       * 회원 조회
@@ -490,6 +490,48 @@ public class MemberCont {
          
          return mav;
        }
+       
+       /**
+        * Session test
+        * http://localhost:9091/member/session.do
+        * @param session
+        * @return
+        */
+       @RequestMapping(value="/member/session.do", 
+                                  method=RequestMethod.GET)
+       public ModelAndView session(HttpSession session){
+         ModelAndView mav = new ModelAndView();
+         
+         mav.addObject("url", "session");
+         mav.setViewName("redirect:/member/msg.do"); 
+         
+         return mav;
+       }
+       
+       /**
+        * 목록 출력 가능
+        * @param session
+        * @return
+        */
+        @RequestMapping(value="/member/list.do", method=RequestMethod.GET)
+        public ModelAndView list(HttpSession session) {
+          ModelAndView mav = new ModelAndView();
+          
+          if (this.memberProc.isAdmin(session)) {
+            List<MemberVO> list = memberProc.list();
+            mav.addObject("list", list);
+
+            mav.setViewName("/member/list"); // /webapp/WEB-INF/views/member/list.jsp
+           
+          } else {
+            mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
+            
+            mav.setViewName("redirect:/member/msg.do");      
+          }
+          
+          
+          return mav;
+        }  
     
     
 
