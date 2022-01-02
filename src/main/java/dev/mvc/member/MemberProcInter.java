@@ -1,5 +1,6 @@
 package dev.mvc.member;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface MemberProcInter {
@@ -57,5 +58,19 @@ public interface MemberProcInter {
      * @return
      */
     public int delete(int memberno);
+    
+    /**
+     * 현재 패스워드 검사
+     * @param map
+     * @return 0: 일치하지 않음, 1: 일치함
+     */
+    public int passwd_check(HashMap<Object, Object> map);
+    
+    /**
+     * 패스워드 변경
+     * @param map
+     * @return 변경된 패스워드 갯수
+     */
+    public int passwd_update(HashMap<Object, Object> map);
 
 }

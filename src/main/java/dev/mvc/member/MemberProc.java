@@ -63,6 +63,17 @@ public class MemberProc implements MemberProcInter  {
       return cnt;
     }
    
+    @Override
+    public int passwd_check(HashMap<Object, Object> map) {
+      int cnt = this.memberDAO.passwd_check(map);
+      return cnt;
+    }
+
+    @Override
+    public int passwd_update(HashMap<Object, Object> map) {
+      int cnt = this.memberDAO.passwd_update(map);
+      return cnt;
+    }
     
 
 

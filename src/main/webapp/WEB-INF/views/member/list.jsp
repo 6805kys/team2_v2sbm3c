@@ -90,6 +90,7 @@
       <TD class='td_basic'>${mdate.substring(0, 10)}</TD> <!-- 년월일 -->
       <TD class='td_basic'><A href="./read.do?memberno=${memberno}">${gradeno}</A></TD>
       <TD class='td_basic'>
+        <!-- <A href="./passwd_update.do?memberno=${memberno}"><IMG src='/member/images/passwd.png' title='패스워드 변경'></A> -->
         <A href="./read.do?memberno=${memberno}"><IMG src='/member/images/update.png' title='수정'></A>
         <A href="./delete.do?memberno=${memberno}"><IMG src='/member/images/delete.png' title='삭제'></A>
       </TD>
