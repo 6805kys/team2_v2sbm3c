@@ -159,6 +159,22 @@ public class MemberCont {
      }
      
      /**
+      * 마이페이지
+      * @param memberno
+      * @return
+      */
+     @RequestMapping(value="/member/mypage.do", method=RequestMethod.GET)
+     public ModelAndView mypage(int memberno){
+       ModelAndView mav = new ModelAndView();
+       
+       MemberVO memberVO = this.memberProc.mypage(memberno);
+       mav.addObject("memberVO", memberVO);
+       mav.setViewName("/member/mypage"); // /member/mypage.jsp
+       
+       return mav; // forward
+     }
+     
+     /**
       * 회원 정보 수정 처리
       * @param memberVO
       * @return
@@ -316,7 +332,8 @@ public class MemberCont {
        // http://localhost:9091/member/login.do 
        @RequestMapping(value = "/member/login.do", 
                                   method = RequestMethod.GET)
-       public ModelAndView login_cookie(HttpServletRequest request) {
+       public ModelAndView login_cookie(HttpServletRequest request,
+                                                       @RequestParam(value="return_url", defaultValue="") String return_url ) {
          ModelAndView mav = new ModelAndView();
          
          Cookie[] cookies = request.getCookies();
@@ -332,13 +349,13 @@ public class MemberCont {
              cookie = cookies[i]; // 쿠키 객체 추출
              
              if (cookie.getName().equals("ck_id")){
-               ck_id = cookie.getValue(); 
+               ck_id = cookie.getValue();                                   // Cookie에 저장된 id
              }else if(cookie.getName().equals("ck_id_save")){
-               ck_id_save = cookie.getValue();  // Y, N
+               ck_id_save = cookie.getValue();                            // Cookie 에 id를 저장 할 것인자의 여부(Y, N)
              }else if (cookie.getName().equals("ck_passwd")){
-               ck_passwd = cookie.getValue();         // 1234
+               ck_passwd = cookie.getValue();                            // Cookie 에 저장된 password
              }else if(cookie.getName().equals("ck_passwd_save")){
-               ck_passwd_save = cookie.getValue();  // Y, N
+               ck_passwd_save = cookie.getValue();                     // Cookie dp password를 저장할 것인지 
              }
            }
          }
@@ -347,6 +364,7 @@ public class MemberCont {
          mav.addObject("ck_id_save", ck_id_save);
          mav.addObject("ck_passwd", ck_passwd);
          mav.addObject("ck_passwd_save", ck_passwd_save);
+         mav.addObject("return_url", return_url);
          
          mav.setViewName("/member/login_ck_form");
          return mav;
@@ -407,7 +425,8 @@ public class MemberCont {
                                   String id,
                                   String passwd,
                                   @RequestParam(value="id_save", defaultValue="") String id_save,
-                                  @RequestParam(value="passwd_save", defaultValue="") String passwd_save) {
+                                  @RequestParam(value="passwd_save", defaultValue="") String passwd_save,
+                                  @RequestParam(value="return_url", defaultValue="") String return_url) {
          ModelAndView mav = new ModelAndView();
          Map<String, Object> map = new HashMap<String, Object>();
          map.put("id", id);
@@ -464,7 +483,14 @@ public class MemberCont {
            response.addCookie(ck_passwd_save);
            // -------------------------------------------------------------------
            
-           mav.setViewName("redirect:/index.do");  
+           System.out.println("-> return_url: " + return_url);
+           
+           if (return_url.length() > 0) { // ★
+             mav.setViewName("redirect:" + return_url);  
+           } else {
+             mav.setViewName("redirect:/index.do");
+           }
+           
          } else {
            mav.addObject("url", "login_fail_msg");
            mav.setViewName("redirect:/member/msg.do"); 
@@ -531,8 +557,8 @@ public class MemberCont {
           
           
           return mav;
-        }  
-    
+        }
+           
     
 
 }

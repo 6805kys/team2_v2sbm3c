@@ -35,6 +35,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT memberno, id, passwd, nickname, tel, email, mdate, gradeno
     FROM member
     WHERE memberno = #{memberno}
+  </select>
+  
+  <!-- memberno로 mypage 회원 정보 조회 -->
+  <select id="mypage" resultType="dev.mvc.member.MemberVO" parameterType="int">
+    SELECT memberno, id, nickname, tel, email, mdate, gradeno, taste1, taste2
+    FROM member
+    NATURAL JOIN member_info
+    WHERE memberno = #{memberno}
   </select>  
 
   <!-- id로 회원 정보 조회 -->

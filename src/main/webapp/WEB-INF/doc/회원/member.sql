@@ -1,14 +1,14 @@
 -- 테이블 구조
 -- member 삭제전에 FK가 선언된 테이블 먼저 삭제합니다.
-DROP TABLE survey;
-DROP TABLE member_auth;
-DROP TABLE grade; -- member drop 후에 가능
-DROP TABLE member_info;
+--DROP TABLE survey;
+--DROP TABLE member_auth;
+--DROP TABLE grade; -- member drop 후에 가능
+--DROP TABLE member_info;
 --DROP TABLE brcomment;
 --DROP TABLE brcontent;
-DROP TABLE member;
+--DROP TABLE member;
 -- 제약 조건과 함께 삭제(제약 조건이 있어도 삭제됨, 권장하지 않음.)
-DROP TABLE member CASCADE CONSTRAINTS; 
+--DROP TABLE member CASCADE CONSTRAINTS; 
 
 CREATE TABLE member (
   memberno NUMBER(10) NOT NULL, -- 회원 번호, 레코드를 구분하는 컬럼 
@@ -96,6 +96,18 @@ CNT
 CNT
 ------
    1   ← 중복 됨.
+   
+ 4) mypage: memberno기준으로 member_info NATURAL JOIN
+  SELECT memberno, id, nickname, tel, email, mdate, gradeno, taste1, taste2
+  FROM member
+  NATURAL JOIN  member_info
+  WHERE memberno=4;
+ 
+ 
+-- SELECT m1.memberno, m1.id, m1.nickname, m1.tel, m1.email, m1.mdate, m1.gradeno, m2.taste1, m2.taste2
+-- FROM member m1
+-- LEFT OUTER JOIN member_info m2
+-- ON (m1.memberno=m2.memberno);
 
 
   
@@ -137,3 +149,5 @@ COMMIT;
 SELECT COUNT(memberno) as cnt
 FROM member
 WHERE id='user1' AND passwd='1234';
+
+ 

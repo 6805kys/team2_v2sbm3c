@@ -49,6 +49,12 @@ public class MemberProc implements MemberProcInter  {
     }
     
     @Override
+    public MemberVO mypage(int memberno) {
+      MemberVO memberVO = this.memberDAO.mypage(memberno);
+      return memberVO;
+    }   
+    
+    @Override
     public MemberVO readById(String id) {
       MemberVO memberVO = this.memberDAO.readById(id);
       return memberVO;
@@ -122,7 +128,7 @@ public class MemberProc implements MemberProcInter  {
       }
       
       return sw;
-    }  
+    }
     
 
 

@@ -39,6 +39,25 @@ public class MemberVO {
     /** 이동할 주소 저장 */
     private String url_address = "";
     
+    /** 취향1 */
+    private String taste1 = "";
+    /** 취향2 */
+    private String taste2 = "";
+    
+    
+    
+    public String getTaste1() {
+        return taste1;
+    }
+    public void setTaste1(String taste1) {
+        this.taste1 = taste1;
+    }
+    public String getTaste2() {
+        return taste2;
+    }
+    public void setTaste2(String taste2) {
+        this.taste2 = taste2;
+    }
     public String getOld_passwd() {
         return old_passwd;
     }

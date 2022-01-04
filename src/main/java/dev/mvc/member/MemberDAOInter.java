@@ -40,6 +40,13 @@ public interface MemberDAOInter {
     public MemberVO read(int memberno);
     
     /**
+     * memberno로 회원 정보 조회
+     * @param memberno
+     * @return
+     */
+    public MemberVO mypage(int memberno);
+    
+    /**
      * id로 회원 정보 조회
      * @param id
      * @return
@@ -78,6 +85,7 @@ public interface MemberDAOInter {
      * 로그인 처리
      */
     public int login(Map<String, Object> map);
+    
     
 
 }

@@ -42,6 +42,13 @@ public interface MemberProcInter {
     public MemberVO read(int memberno);
     
     /**
+     * memberno로 회원 정보 조회
+     * @param memberno
+     * @return
+     */
+    public MemberVO mypage(int memberno);
+    
+    /**
      * id로 회원 정보 조회
      * @param id
      * @return
@@ -93,6 +100,7 @@ public interface MemberProcInter {
      * @param session
      * @return true: 관리자
      */
-    public boolean isAdmin(HttpSession session);   
+    public boolean isAdmin(HttpSession session);
+    
 
 }
