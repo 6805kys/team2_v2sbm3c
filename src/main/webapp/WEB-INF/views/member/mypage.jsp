@@ -60,7 +60,7 @@
               </div>
             </div>
             <div class="panel panel-default">
-              <div class="panel-heading">Who am I?</div>
+              <div class="panel-heading">최애빵</div>
               <div class="panel-body">
                         <p>빵파고에서 빵을 추천받기 위한 취향정보입니다.<br>
                             설문조사를 통해 나만의 빵을 추천 받아보세요.</p>

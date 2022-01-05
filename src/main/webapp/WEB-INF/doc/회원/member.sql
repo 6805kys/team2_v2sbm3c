@@ -98,16 +98,16 @@ CNT
    1   ← 중복 됨.
    
  4) mypage: memberno기준으로 member_info NATURAL JOIN
-  SELECT memberno, id, nickname, tel, email, mdate, gradeno, taste1, taste2
-  FROM member
-  NATURAL JOIN  member_info
-  WHERE memberno=4;
+SELECT memberno, id, nickname, tel, email, mdate, gradeno, taste1, taste2
+FROM member
+NATURAL JOIN  member_info
+WHERE memberno=4;
  
- 
--- SELECT m1.memberno, m1.id, m1.nickname, m1.tel, m1.email, m1.mdate, m1.gradeno, m2.taste1, m2.taste2
--- FROM member m1
--- LEFT OUTER JOIN member_info m2
--- ON (m1.memberno=m2.memberno);
+  5) LEFT OUTER JOIN
+SELECT m1.memberno, m1.id, m1.nickname, m1.tel, m1.email, m1.mdate, m1.gradeno, m2.taste1, m2.taste2
+FROM member m1
+LEFT OUTER JOIN member_info m2
+ON (m1.memberno=m2.memberno);
 
 
   

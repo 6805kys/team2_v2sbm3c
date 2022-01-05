@@ -158,21 +158,21 @@ public class MemberCont {
        return mav; // forward
      }
      
-     /**
-      * 마이페이지
-      * @param memberno
-      * @return
-      */
-     @RequestMapping(value="/member/mypage.do", method=RequestMethod.GET)
-     public ModelAndView mypage(int memberno){
-       ModelAndView mav = new ModelAndView();
-       
-       MemberVO memberVO = this.memberProc.mypage(memberno);
-       mav.addObject("memberVO", memberVO);
-       mav.setViewName("/member/mypage"); // /member/mypage.jsp
-       
-       return mav; // forward
-     }
+//     /**
+//      * 마이페이지
+//      * @param memberno
+//      * @return
+//      */
+//     @RequestMapping(value="/member/mypage.do", method=RequestMethod.GET)
+//     public ModelAndView mypage(int memberno){
+//       ModelAndView mav = new ModelAndView();
+//       
+//       MemberVO memberVO = this.memberProc.mypage(memberno);
+//       mav.addObject("memberVO", memberVO);
+//       mav.setViewName("/member/mypage"); // /member/mypage.jsp
+//       
+//       return mav; // forward
+//     }
      
      /**
       * 회원 정보 수정 처리
@@ -558,7 +558,45 @@ public class MemberCont {
           
           return mav;
         }
-           
+        
+        
+        /**
+         * 마이페이지
+         * @param session
+         * @param memberno
+         * @return
+         */
+        @RequestMapping(value="/member/mypage.do", method=RequestMethod.GET)
+        public ModelAndView mypage(HttpSession session, int memberno){
+          ModelAndView mav = new ModelAndView();
+          
+          if(this.memberProc.isMember(session)) {
+              MemberVO memberVO = memberProc.mypage(memberno);
+              mav.addObject("memberVO", memberVO);
+              mav.setViewName("/member/mypage"); // /member/mypage.jsp
+          } else {
+              mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
+              
+              mav.setViewName("redirect:/member/msg.do");    
+          }
+
+          return mav; // forward
+        }
+//      /**
+//      * 마이페이지
+//      * @param memberno
+//      * @return
+//      */
+//     @RequestMapping(value="/member/mypage.do", method=RequestMethod.GET)
+//     public ModelAndView mypage(int memberno){
+//       ModelAndView mav = new ModelAndView();
+//       
+//       MemberVO memberVO = this.memberProc.mypage(memberno);
+//       mav.addObject("memberVO", memberVO);
+//       mav.setViewName("/member/mypage"); // /member/mypage.jsp
+//       
+//       return mav; // forward
+//     }
     
 
 }

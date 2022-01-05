@@ -38,24 +38,24 @@
                      500~599: 탈퇴회원 영역
                             999: 비회원
                        --%>
-  <c:set var="grade" value="${sessionScope.grade}" />
-  로그인 등급: ${grade }<br>
+  <c:set var="gradeno" value="${sessionScope.gradeno}" />
+  로그인 등급: ${gradeno }<br>
   <c:if test="${sessionScope.id ne null }">
     로그인된 사용자 메뉴 출력 영역(특정 권한별 구분)<br>
     <c:choose>
-      <c:when test="${grade >= 1 and grade <= 9}">관리자 영역</c:when>    
-      <c:when test="${grade >= 10 and grade <= 19}">회원(씨앗) 영역</c:when>
-      <c:when test="${grade >= 20 and grade <= 29}">회원(밀) 영역</c:when>
-      <c:when test="${grade >= 30 and grade <= 99}">회원(빵) 영역</c:when>   
-      <c:when test="${grade >= 100 and grade <= 199}">파트너 회원 영역</c:when>
-      <c:when test="${grade >= 400 and grade <= 499}">정지(휴면) 회원 영역</c:when>
-      <c:when test="${grade >= 500 and grade <= 599}">탈퇴 회원 영역</c:when>
-      <c:when test="${grade == 999}">비회원 영역 처리</c:when>
+      <c:when test="${gradeno >= 1 and gradeno <= 9}">관리자 영역</c:when>    
+      <c:when test="${gradeno >= 10 and gradeno <= 19}">회원(씨앗) 영역</c:when>
+      <c:when test="${gradeno >= 20 and gradeno <= 29}">회원(밀) 영역</c:when>
+      <c:when test="${gradeno >= 30 and gradeno <= 99}">회원(빵) 영역</c:when>   
+      <c:when test="${gradeno >= 100 and gradeno <= 199}">파트너 회원 영역</c:when>
+      <c:when test="${gradeno >= 400 and gradeno <= 499}">정지(휴면) 회원 영역</c:when>
+      <c:when test="${gradeno >= 500 and gradeno <= 599}">탈퇴 회원 영역</c:when>
+      <c:when test="${gradeno == 999}">비회원 영역 처리</c:when>
     </c:choose>  
     
     <c:choose>
-      <c:when test="${grade <= 199}"> + 관리자 + 회원 +파트너 영역</c:when>
-      <c:when test="${grade >= 400 and grade <= 599}"> + 정지, 탈퇴 영역 처리</c:when>
+      <c:when test="${gradeno <= 199}"> + 관리자 + 회원 +파트너 영역</c:when>
+      <c:when test="${gradeno >= 400 and gradeno <= 599}"> + 정지, 탈퇴 영역 처리</c:when>
     </c:choose>  
   </c:if><br> 
  
