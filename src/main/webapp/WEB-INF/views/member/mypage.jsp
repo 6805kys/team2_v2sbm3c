@@ -1,6 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
  
 <!DOCTYPE html>
 <html lang="ko">
@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" />
 <title>Project 빵파고 > Mypage</title>
+
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
 
 <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -17,27 +18,25 @@
 
 <script type="text/javascript">
   $(function(){
-      $('#btn_close').on('click', setFocus); // Dialog창을 닫은후의 focus 이동
-      $('#btn_send').on('click', send); 
+
   });
 </script>
 </head>
 
 <body>
 <jsp:include page="../menu/top.jsp" flush='false' />
+
   <DIV class='title_line'>
     빵파고 마이페이지
   </DIV>
+  
   <DIV class='content_body'>   
+  
       <div class="container">
         <ASIDE class="aside_right">
           <A href="javascript:location.reload();">새로고침</A>
         </ASIDE>
-          
-        <FORM name='frm' id='frm' method='POST' action='./update.do' onsubmit="return send();" class="form-horizontal">
-          <input type='hidden' name='memberno' id='memberno' value='${memberVO.memberno }'>     
-          <input type='hidden' name='id' id='id' value='${memberVO.id }'>
-          <input type='hidden' name='gradeno' id='gradeno' value='${memberVO.gradeno }'>        
+        <div class='menu_line'></div>
           
           <h2>마이페이지</h2>
           <p>종합적인 회원정보 조회 페이지</p>
@@ -45,9 +44,32 @@
           
             <div class="panel panel-default">
               <div class="panel-heading">빵파고 프로필</div>
-              <div class="panel-body">
+              <div class="panel-body">          
                         <p>빵파고에서 '나'를 표현하는 프로필 정보입니다.<br>
                             수정화면에서 프로필 사진과 닉네임을 변경하세요.</p>
+                          <TABLE class="table table-condensed" style='width: 100%;'>
+                              <colgroup>
+                                    <col style='width: 30%;'/>
+                                    <col style='width: 70%;'/>
+                              </colgroup>
+                              <TR>
+                                    <TH class='th_bs'>아이디</TH>
+                                    <TH class='th_bs'>닉네임</TH>
+                              </TR>
+                              
+                              <c:forEach var="memberVO" items="${list }">
+                                  <c:set var="memberno" value ="${memberVO.id}" />
+                                  <c:set var="nickname" value ="${memberVO.nickname}" />
+                                  
+                              <TR>
+                                    <TD class='td_left'><A href="./read.do?memberno=${memberno}">${id}</A></TD>
+                                    <TD class='td_left'><A href="./read.do?memberno=${memberno}">${nickname}</A></TD>
+                              </TR>
+                              </c:forEach>
+                          </TABLE>
+                            <DIV class='bottom_menu'>
+                                <A href="./read.do?memberno=${memberno}"><IMG src='/member/images/update.png' title='수정'></A>
+                            </DIV>
               </div>
             </div>
             
@@ -76,7 +98,7 @@
             </div>
             
           </div>
-        </FORM>
+
       </div>
      
 
