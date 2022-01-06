@@ -567,11 +567,15 @@ public class MemberCont {
          * @return
          */
         @RequestMapping(value="/member/mypage.do", method=RequestMethod.GET)
-        public ModelAndView mypage(HttpSession session, int memberno){
+        public ModelAndView mypage(HttpSession session){
+            
           ModelAndView mav = new ModelAndView();
           
+          int memberno = (int)session.getAttribute("memberno");
+          
+          MemberVO memberVO = this.memberProc.read(memberno);
+          
           if(this.memberProc.isMember(session)) {
-              MemberVO memberVO = memberProc.mypage(memberno);
               mav.addObject("memberVO", memberVO);
               mav.setViewName("/member/mypage"); // /member/mypage.jsp
           } else {
