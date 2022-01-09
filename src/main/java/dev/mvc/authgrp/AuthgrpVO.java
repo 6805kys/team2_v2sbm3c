@@ -1,4 +1,4 @@
-package dev.mve.authgrp;
+package dev.mvc.authgrp;
 
 public class AuthgrpVO {
     /*

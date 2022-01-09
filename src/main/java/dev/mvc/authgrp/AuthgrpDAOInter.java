@@ -1,10 +1,12 @@
-package dev.mve.authgrp;
+package dev.mvc.authgrp;
 
-public interface AuthgrpProcInter {
+public interface AuthgrpDAOInter {
     /**
      * 권한그룹 생성
      * @param authgrpVO
      * @return
      */
     public int create(AuthgrpVO authgrpVO);
+    
+
 }

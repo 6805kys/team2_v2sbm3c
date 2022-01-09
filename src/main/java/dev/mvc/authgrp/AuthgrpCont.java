@@ -1,4 +1,4 @@
-package dev.mve.authgrp;
+package dev.mvc.authgrp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
