@@ -9,6 +9,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INSERT INTO authgrp(authno, authname)
         VALUES (authgrp_seq.nextval, #{authname})
     </insert>
+    
+  <select id="list_authno_asc" resultType="dev.mvc.authgrp.AuthgrpVO">
+    SELECT  authno, authname
+    FROM authgrp
+    ORDER BY authno ASC
+  </select>
 
 
 

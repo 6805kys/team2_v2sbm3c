@@ -1,5 +1,7 @@
 package dev.mvc.authgrp;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -65,5 +67,20 @@ public class AuthgrpCont {
 
         return mav; // forward
     }
+    
+        
+    // http://localhost:9091/authgrp/list.do
+      
+    @RequestMapping(value = "/authgrp/list.do", method = RequestMethod.GET)
+    public ModelAndView list() { ModelAndView mav = new ModelAndView();
+      
+    List<AuthgrpVO> list = this.authgrpProc.list_authno_asc();
+      
+    mav.addObject("list", list); // request.setAttribute("list", list);
+      
+    mav.setViewName("/authgrp/list"); // /webapp/WEB-INF/views/authgrp/list.jsp
+    return mav;
+    }
+     
     
 }
