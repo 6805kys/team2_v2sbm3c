@@ -45,6 +45,33 @@ SELECT authno, authname FROM authgrp ORDER BY authno ASC;
 
 COMMIT;
 
+-- 1-1 authgrp, auth_info INSERT
+-- SQL 오류: ORA-00923: FROM 키워드가 필요한 위치에 없습니다.
+--INSERT ALL
+--    INTO authgrp VALUES(authno, authname)
+--    INTO auth_info VALUES(authno, create_auth, update_auth, delete_auth, read_auth)
+--SELECT authno authgrp_seq.nextval, authname '씨앗(R)',
+--            create_auth 'N', update_auth 'N', delete_auth 'N', read_auth 'Y'
+--FROM authgrp, auth_info
+--WHERE authno = 1;
+
+-- 1-1 
+-- SQL 오류: ORA-00923: FROM 키워드가 필요한 위치에 없습니다.
+--INSERT ALL
+--    INTO authgrp VALUES(authno, authname, create_auth, update_auth, delete_auth, read_auth)
+--    SELECT authno authgrp_seq.nextval, authname '씨앗(R)'
+--    FROM DUAL
+--    UNION ALL
+--    SELECT authno authgrp_seq.nextval, create_auth 'N', update_auth 'N', delete_auth 'N', read_auth 'Y'
+--    FROM DUAL;
+
+-- 1-1 여러 테이블에 동시에 INSERT
+INSERT ALL
+    INTO authgrp VALUES(authgrp_seq.nextval, '씨앗(R)')
+    INTO auth_info VALUES(authgrp_seq.nextval, 'N', 'N', 'N', 'Y')
+SELECT *
+    FROM DUAL;
+
 --2. 조회
 SELECT authno, authname
 FROM authgrp
