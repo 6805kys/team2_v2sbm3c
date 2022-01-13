@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.brtalk.BrtalkDAOInter"> 
+   <!-- <insert id="create" parameterType="dev.mvc.brtalk.BrtalkVO">
+    INSERT INTO talks(talk_no, talk_name, talk_post, passwd, talk_word,
+                                     file1, file1saved, thumb1, size1, talk_crtime)
+    VALUES(brtalk_seq.nextval, #{talk_name}, #{talk_post}, #{passwd}, #{talk_word},
+                #{file1}, #{file1saved}, #{thumb1}, #{size1}, sysdate)
+  </insert> -->
+  
+  <!-- 연속 입력 지원 등록: sequence가 SQL 실행전에 생성되어 talksVO에 저장 후 사용 -->
+  <insert id="create" parameterType="dev.mvc.brtalk.BrtalkVO">
+    <selectKey keyProperty="talk_no" resultType="int" order="BEFORE">
+      SELECT brtalk_seq.nextval FROM dual
+    </selectKey>
+    
+     INSERT INTO brtalk(talk_no, talk_name,  talk_id, talk_post, passwd, talk_word, talk_crtime, talk_mdtime)
+    VALUES(brtalk_seq.nextval, #{talk_name}, #{talk_id}, #{talk_post}, #{passwd}, #{talk_word}, sysdate, sysdate)
+  </insert>
+  
+    <!-- 일반적인 조회 -->
+  <select id="read" resultType="dev.mvc.brtalk.BrtalkVO" parameterType="int">
+    SELECT talk_no, talk_name, talk_id, talk_post, recom, passwd, talk_word, talk_crtime, talk_mdtime
+    FROM brtalk
+    WHERE talk_no = #{talk_no}
+  </select>
+  
+  <select id="list_talk_no_asc" resultType="dev.mvc.brtalk.BrtalkVO" parameterType="int">
+    SELECT talk_no, talk_name, talk_id, talk_post, passwd, talk_word, talk_crtime, talk_mdtime
+    FROM brtalk 
+    ORDER BY talk_no ASC
+  </select> 
+  
+  <!-- 카테고리별 검색 목록 -->
+  <select id="list_by_talk_no_search" resultType="dev.mvc.brtalk.BrtalkVO" 
+             parameterType="HashMap">
+     SELECT talk_no, talk_name, talk_id, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime
+    FROM brtalk
+    <choose>
+      <when test="talk_word == null or talk_word == ''"> <!-- 검색하지 않는 경우 -->
+      </when>
+      <otherwise> <!-- 검색하는 경우 -->
+        WHERE (talk_name LIKE '%' || #{talk_word} || '%' 
+                                                     OR talk_post LIKE '%' || #{talk_word} || '%' 
+                                                     OR talk_word LIKE '%' || #{talk_word} || '%')
+      </otherwise>
+    </choose>
+    ORDER BY talk_no DESC   
+  </select>
+   
+  <!-- 카테고리별 검색 레코드 갯수 -->
+  <select id="search_count" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt
+    FROM brtalk
+    <choose>
+      <when test="talk_word == null or talk_word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+      </when>
+      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+        WHERE (talk_name LIKE '%' || #{talk_word} || '%' 
+                      OR talk_post LIKE '%' || #{talk_word} || '%' 
+                   OR talk_word LIKE '%' || #{talk_word} || '%')
+      </otherwise>
+    </choose>
+  </select>
+  
+  <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
+  <select id="list_by_talk_no_search_paging" 
+             resultType="dev.mvc.brtalk.BrtalkVO" parameterType="HashMap">
+   SELECT talk_no, talk_name, talk_id, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime, r
+   FROM (
+              SELECT talk_no, talk_name, talk_id, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime, rownum as r
+              FROM (
+                        SELECT talk_no, talk_name, talk_id, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime
+                        FROM brtalk
+                        <choose>
+                          <when test="talk_word == null or talk_word == ''"> <!-- 검색하지 않는 경우 -->
+                          </when>
+                          <otherwise>
+                            WHERE (talk_name LIKE '%' || #{talk_word} || '%'  <!-- ||: 결합, %첫눈% -->
+                                                                  OR talk_post LIKE '%' || #{talk_word} || '%' 
+                                                                  OR talk_word LIKE '%' || #{talk_word} || '%')
+                          </otherwise>
+                        </choose>
+                        ORDER BY talk_no DESC
+               )
+    )
+    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]>
+     
+<!--  1 page: WHERE r >= 1 AND r <= 10; 
+       2 page: WHERE r >= 11 AND r <= 20;
+       3 page: WHERE r >= 21 AND r <= 30; -->
+     
+  </select> 
+  
+  <!-- 패스워드 검사 -->
+  <select id="passwd_check" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt 
+    FROM brtalk
+    WHERE talk_no=#{talk_no} AND passwd=#{passwd}
+  </select>
+  
+ <!-- 텍스트 수정 -->
+  <update id="update_text" parameterType="dev.mvc.brtalk.BrtalkVO">
+    UPDATE brtalk
+    SET talk_name=#{talk_name}, talk_post=#{talk_post},  talk_word=#{talk_word}, talk_mdtime=sysdate
+    WHERE talk_no = #{talk_no}
+  </update>
+  
+  <!-- 삭제 기능 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM brtalk
+    WHERE talk_no=#{talk_no}
+  </delete>
+ 
+ <!-- 추천 -->
+  <update id="update_recom" parameterType="int">
+    UPDATE brtalk
+    SET recom = recom + 1
+    WHERE talk_no = #{talk_no}
+  </update>
+ 
+ <update id="update_talk_view" parameterType="int">
+    UPDATE brtalk
+    SET talk_view = talk_view + 1
+    WHERE talk_no = #{talk_no}
+  </update>
+ 
+</mapper> 
+
+
