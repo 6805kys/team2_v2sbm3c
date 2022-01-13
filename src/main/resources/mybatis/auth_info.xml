@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace = "dev.mvc.authgrp.AuthgrpDAOInter">
+<mapper namespace = "dev.mvc.auth_info.Auth_infoDAOInter">
     <insert id = "create" parameterType="dev.mvc.authgrp.AuthgrpVO">
         INSERT INTO auth_info(authno, create_auth, update_auth, delete_auth, read_auth)
         VALUES (authgrp_seq.nextval, #{create_auth}, #{update_auth}, #{delete_auth}, #{read_auth})
