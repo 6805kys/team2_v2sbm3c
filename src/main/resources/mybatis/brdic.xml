@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.brdic.BrdicDAOInter"> 
+   <!-- <insert id="create" parameterType="dev.mvc.brdic.BrdicVO">
+    INSERT INTO dics(dic_no, dic_name, dic_post, passwd, dic_word,
+                                     file1, file1saved, thumb1, size1, dic_crtime)
+    VALUES(brdic_seq.nextval, #{dic_name}, #{dic_post}, #{passwd}, #{dic_word},
+                #{file1}, #{file1saved}, #{thumb1}, #{size1}, sysdate)
+  </insert> -->
+  
+  <!-- 연속 입력 지원 등록: sequence가 SQL 실행전에 생성되어 dicsVO에 저장 후 사용 -->
+  <insert id="create" parameterType="dev.mvc.brdic.BrdicVO">
+    <selectKey keyProperty="dic_no" resultType="int" order="BEFORE">
+      SELECT brdic_seq.nextval FROM dual
+    </selectKey>
+    
+     INSERT INTO brdic(dic_no, dic_name, dic_post, passwd, dic_word,
+                                     file1, file1saved, thumb1, size1, dic_crtime, dic_mdtime)
+    VALUES(brdic_seq.nextval, #{dic_name}, #{dic_post}, #{passwd}, #{dic_word},
+                #{file1}, #{file1saved}, #{thumb1}, #{size1}, sysdate, sysdate)
+  </insert>
+  
+    <!-- 일반적인 조회 -->
+  <select id="read" resultType="dev.mvc.brdic.BrdicVO" parameterType="int">
+    SELECT dic_no, dic_name, dic_post, recom, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
+    FROM brdic
+    WHERE dic_no = #{dic_no}
+  </select>
+  
+  <select id="list_dic_no_asc" resultType="dev.mvc.brdic.BrdicVO" parameterType="int">
+    SELECT dic_no, dic_name, dic_post, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
+    FROM brdic 
+    ORDER BY dic_no ASC
+  </select> 
+  
+  <!-- 카테고리별 검색 목록 -->
+  <select id="list_by_dic_no_search" resultType="dev.mvc.brdic.BrdicVO" 
+             parameterType="HashMap">
+     SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
+    FROM brdic
+    <choose>
+      <when test="dic_word == null or dic_word == ''"> <!-- 검색하지 않는 경우 -->
+      </when>
+      <otherwise> <!-- 검색하는 경우 -->
+        WHERE (dic_name LIKE '%' || #{dic_word} || '%' 
+                                                     OR dic_post LIKE '%' || #{dic_word} || '%' 
+                                                     OR dic_word LIKE '%' || #{dic_word} || '%')
+      </otherwise>
+    </choose>
+    ORDER BY dic_no DESC   
+  </select>
+   
+  <!-- 카테고리별 검색 레코드 갯수 -->
+  <select id="search_count" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt
+    FROM brdic
+    <choose>
+      <when test="dic_word == null or dic_word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+      </when>
+      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+        WHERE (dic_name LIKE '%' || #{dic_word} || '%' 
+                      OR dic_post LIKE '%' || #{dic_word} || '%' 
+                   OR dic_word LIKE '%' || #{dic_word} || '%')
+      </otherwise>
+    </choose>
+  </select>
+  
+  <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
+  <select id="list_by_dic_no_search_paging" 
+             resultType="dev.mvc.brdic.BrdicVO" parameterType="HashMap">
+   SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1, r
+   FROM (
+              SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1, rownum as r
+              FROM (
+                        SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
+                        FROM brdic
+                        <choose>
+                          <when test="dic_word == null or dic_word == ''"> <!-- 검색하지 않는 경우 -->
+                          </when>
+                          <otherwise>
+                            WHERE (dic_name LIKE '%' || #{dic_word} || '%'  <!-- ||: 결합, %첫눈% -->
+                                                                  OR dic_post LIKE '%' || #{dic_word} || '%' 
+                                                                  OR dic_word LIKE '%' || #{dic_word} || '%')
+                          </otherwise>
+                        </choose>
+                        ORDER BY dic_no DESC
+               )
+    )
+    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]>
+     
+<!--  1 page: WHERE r >= 1 AND r <= 10; 
+       2 page: WHERE r >= 11 AND r <= 20;
+       3 page: WHERE r >= 21 AND r <= 30; -->
+     
+  </select> 
+  
+  <!-- 패스워드 검사 -->
+  <select id="passwd_check" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt 
+    FROM brdic
+    WHERE dic_no=#{dic_no} AND passwd=#{passwd}
+  </select>
+  
+ <!-- 텍스트 수정 -->
+  <update id="update_text" parameterType="dev.mvc.brdic.BrdicVO">
+    UPDATE brdic
+    SET dic_name=#{dic_name}, dic_post=#{dic_post},  dic_word=#{dic_word}, dic_mdtime=sysdate
+    WHERE dic_no = #{dic_no}
+  </update>
+  
+  <!-- 파일 수정 -->
+  <update id="update_file" parameterType="dev.mvc.brdic.BrdicVO">
+    UPDATE brdic
+    SET file1=#{file1}, file1saved=#{file1saved}, thumb1=#{thumb1}, size1=#{size1}, dic_mdtime=sysdate
+    WHERE dic_no = #{dic_no}
+  </update>
+  
+  <!-- 삭제 기능 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM brdic
+    WHERE dic_no=#{dic_no}
+  </delete>
+ 
+ <!-- 추천 -->
+  <update id="update_recom" parameterType="int">
+    UPDATE brdic
+    SET recom = recom + 1
+    WHERE dic_no = #{dic_no}
+  </update>
+ 
+ <update id="update_dic_view" parameterType="int">
+    UPDATE brdic
+    SET dic_view = dic_view + 1
+    WHERE dic_no = #{dic_no}
+  </update>
+ 
+</mapper> 
+
+
