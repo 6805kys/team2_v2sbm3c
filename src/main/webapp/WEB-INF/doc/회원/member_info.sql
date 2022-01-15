@@ -31,18 +31,6 @@ commit;
 
   1. 등록
   
--- 개인 회원 left join
---INSERT INTO member_info(taste1, taste2)
---VALUES (member_seq.nextval, 'user1', '1234', '회원1', '000-0000-0000', sysdate, 10);
- 
---INSERT INTO member(memberno, id, passwd, nickname, tel, gradeno)
---VALUES (member_seq.nextval, 'user2', '1234', '회원2', '000-0000-0000', sysdate, 10);
- 
---INSERT INTO member(memberno, id, passwd, nickname, tel, gradeno)
---VALUES (member_seq.nextval, 'user3', '1234', '회원3', '000-0000-0000', sysdate, 10);
--- 조인 관련 개념 추가 필요
--- 1. 등록
-  
 -- 
 INSERT INTO member_info(memberno, taste1, taste2, surveyno)
 VALUES (3, '가성비', '양', 1);

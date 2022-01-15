@@ -42,7 +42,10 @@
 
 <DIV class='content_body'>  
   <DIV style='width: 80%; margin: 0px auto;'>
-    <FORM name='frm' method='POST' action='./login.do' class="form-horizontal">
+
+    <FORM name='frm' method='POST' action='/member/login.do' class="form-horizontal">
+      <%-- 로그인 후 자동으로 이동할 페이지 전달 ★ --%>
+      <input type="hidden" name="return_url" value="${return_url}">
     
       <div class="form-group">
         <label class="col-md-5 control-label" style='font-size: 0.8em;'>ID</label>    

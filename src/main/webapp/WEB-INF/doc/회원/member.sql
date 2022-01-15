@@ -33,7 +33,7 @@ COMMENT ON COLUMN MEMBER.EMAIL is '이메일';
 COMMENT ON COLUMN MEMBER.MDATE is '가입일';
 COMMENT ON COLUMN MEMBER.GRADENO is '등급번호';
 
-DROP SEQUENCE member_seq;
+--DROP SEQUENCE member_seq;
 CREATE SEQUENCE member_seq
   START WITH 1              -- 시작 번호
   INCREMENT BY 1          -- 증가값
@@ -97,7 +97,7 @@ CNT
 ------
    1   ← 중복 됨.
    
- 4) mypage: memberno기준으로 member_info NATURAL JOIN
+  4) mypage: memberno기준으로 member_info NATURAL JOIN
 SELECT memberno, id, nickname, tel, email, mdate, gradeno, taste1, taste2
 FROM member
 NATURAL JOIN  member_info
@@ -116,6 +116,10 @@ UPDATE member
 SET nickname='빵덕1', tel='111-1111-1111', email='email@bpg.com', gradeno=20
 WHERE memberno=4;
 
+UPDATE member 
+SET id='user29', nickname='회원29'
+WHERE memberno=29;
+
 COMMIT;  
   
   
@@ -124,8 +128,8 @@ COMMIT;
 DELETE FROM member;
  
   2) 특정 회원 삭제
-DELETE FROM member
-WHERE memberno=6;
+--DELETE FROM member
+--WHERE memberno=6;
 
 
 COMMIT;

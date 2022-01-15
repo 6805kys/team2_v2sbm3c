@@ -19,22 +19,25 @@
   */
   .top_img {
     width: 100%;
-    height: 100px;
-    background-image: url('/css/images/top_image_1920.jpg');
+    height: 200px;
+    background-image: url('/css/images/bread01.jpg');
   }
   
   .top_menu_label {
     position: relative; /* 속해 있는 부모 태그 기준 설정 */
+    font: serif;
+    font-size: 50px;
+    font-weight : 900;
     top: 1%;
     left: 0.5%;
-    color: #FFFFFF;
+    color: #ff8040;
   }
   
   .top_menu {
     position: relative; /* 부모 태그 기준, 화면 상단 기준*/
-    top: 50%; 
-    background-color: rgba(50, 50, 255, 0.3);  /* 0.3: Alpha, 투명도 */  
-    color: white;
+    top: 56%; 
+    background-color: #ff8040;  /* 0.3: Alpha, 투명도 */  
+    color: #000000;   
     padding-left: 10px; 
     height: 25px;
   }

@@ -29,6 +29,8 @@ CREATE SEQUENCE bread_seq
 INSERT INTO bread(breadno, breadgrpno, bread)
 VALUES (bread_seq.nextval, 1,'단팥빵');
 
+commit;
+
 -- R(List)
 SELECT breadno, breadgrpno, bread FROM bread ORDER BY breadgrpno;
       

@@ -96,6 +96,8 @@ public class MemberProc implements MemberProcInter  {
       int gradeno = 999;
       
       // System.out.println("-> gradeno: " + session.getAttribute("gradeno"));
+      System.out.println("-> gradeno: " + session.getAttribute("gradeno"));
+
       if (session != null) {
         String id = (String)session.getAttribute("id");
         if (session.getAttribute("gradeno") != null) {
@@ -116,6 +118,7 @@ public class MemberProc implements MemberProcInter  {
       int gradeno = 999;
       
       // System.out.println("-> gradeno: " + session.getAttribute("gradeno"));
+      System.out.println("-> gradeno: " + session.getAttribute("gradeno"));
       if (session != null) {
         String id = (String)session.getAttribute("id");
         if (session.getAttribute("gradeno") != null) {

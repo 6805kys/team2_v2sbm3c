@@ -41,6 +41,8 @@ CREATE SEQUENCE bakery_seq
 INSERT INTO bakery(bakeryno, bakery, telephone, address, station, tag, rating, signature, breadgrpno)
 VALUES (bakery_seq.nextval, '장불랑제리', '0200000000', '관악구', '서울대입구역', '맘모스빵, 단팥빵, 단팥생크림빵', '5.0', '맘모스빵', 1);
 
+commit;
+
 -- R(List)
 SELECT bakeryno, bakery, telephone, address, station, tag, rating, signature, breadgrpno FROM bakery ORDER BY breadgrpno;
       

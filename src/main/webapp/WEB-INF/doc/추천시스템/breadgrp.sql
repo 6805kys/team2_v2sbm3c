@@ -21,12 +21,10 @@ CREATE SEQUENCE breadgrp_seq
   CACHE 2                        -- 2번은 메모리에서만 계산
   NOCYCLE;                      -- 다시 1부터 생성되는 것을 방지
   
-
+commit;
 -- C
 INSERT INTO breadgrp(breadgrpno, breadgrp)
 VALUES (breadgrp_seq.nextval, '팥류');
-
-COMMIT;
 
 -- R(List)
 SELECT breadgrpno, breadgrp FROM breadgrp ORDER BY breadgrpno;

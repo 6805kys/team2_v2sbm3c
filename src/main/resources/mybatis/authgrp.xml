@@ -5,23 +5,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace = "dev.mvc.authgrp.AuthgrpDAOInter">
-
      <!-- 변경 요망
      INSERT ALL
     INTO authgrp VALUES(authgrp_seq.nextval, '씨앗(R)')
     INTO auth_info VALUES(authgrp_seq.nextval, 'N', 'N', 'N', 'Y')
     SELECT *
     FROM DUAL; -->
+
     <insert id = "create" parameterType="dev.mvc.authgrp.AuthgrpVO">
         INSERT INTO authgrp(authno, authname)
         VALUES (authgrp_seq.nextval, #{authname})
     </insert>
     
-  <select id="list_authno_asc" resultType="dev.mvc.authgrp.AuthgrpVO">
-    SELECT  authno, authname
-    FROM authgrp
-    ORDER BY authno ASC
-  </select>
+    <select id="list_authno_asc" resultType="dev.mvc.authgrp.AuthgrpVO">
+        SELECT  authno, authname
+        FROM authgrp
+        ORDER BY authno ASC
+    </select>
 
 
 

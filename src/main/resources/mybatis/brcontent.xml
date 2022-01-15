@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.brcontent.BrcontentDAOInter"> 
+   <!-- <insert id="create" parameterType="dev.mvc.brcontent.BrcontentVO">
+    INSERT INTO contents(content_no, content_name, content_post, passwd, content_word,
+                                     file1, file1saved, thumb1, size1, content_crtime)
+    VALUES(brcontent_seq.nextval, #{content_name}, #{content_post}, #{passwd}, #{content_word},
+                #{file1}, #{file1saved}, #{thumb1}, #{size1}, sysdate)
+  </insert> -->
+  
+  <!-- 연속 입력 지원 등록: sequence가 SQL 실행전에 생성되어 ContentsVO에 저장 후 사용 -->
+  <insert id="create" parameterType="dev.mvc.brcontent.BrcontentVO">
+    <selectKey keyProperty="content_no" resultType="int" order="BEFORE">
+      SELECT brcontent_seq.nextval FROM dual
+    </selectKey>
+    
+     INSERT INTO brcontent(content_no, content_id, content_name, content_post, passwd, content_word,
+                                     file1, file1saved, thumb1, size1, content_crtime, content_mdtime)
+    VALUES(brcontent_seq.nextval, #{content_id}, #{content_name}, #{content_post}, #{passwd}, #{content_word},
+                #{file1}, #{file1saved}, #{thumb1}, #{size1}, sysdate, sysdate)
+  </insert>
+  
+    <!-- 일반적인 조회 -->
+  <select id="read" resultType="dev.mvc.brcontent.BrcontentVO" parameterType="int">
+    SELECT content_no, content_id,  content_name, content_post, recom, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
+    FROM brcontent
+    WHERE content_no = #{content_no}
+  </select>
+  
+  <select id="list_content_no_asc" resultType="dev.mvc.brcontent.BrcontentVO" parameterType="int">
+    SELECT content_no, content_id, content_name, content_post, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
+    FROM brcontent 
+    ORDER BY content_no ASC
+  </select> 
+  
+  <!-- 카테고리별 검색 목록 -->
+  <select id="list_by_content_no_search" resultType="dev.mvc.brcontent.BrcontentVO" 
+             parameterType="HashMap">
+     SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
+    FROM brcontent
+    <choose>
+      <when test="content_word == null or content_word == ''"> <!-- 검색하지 않는 경우 -->
+      </when>
+      <otherwise> <!-- 검색하는 경우 -->
+        WHERE (content_name LIKE '%' || #{content_word} || '%' 
+                                                     OR content_post LIKE '%' || #{content_word} || '%' 
+                                                     OR content_word LIKE '%' || #{content_word} || '%')
+      </otherwise>
+    </choose>
+    ORDER BY content_no DESC   
+  </select>
+   
+  <!-- 카테고리별 검색 레코드 갯수 -->
+  <select id="search_count" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt
+    FROM brcontent
+    <choose>
+      <when test="content_word == null or content_word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+      </when>
+      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+        WHERE (content_name LIKE '%' || #{content_word} || '%' 
+                      OR content_post LIKE '%' || #{content_word} || '%' 
+                   OR content_word LIKE '%' || #{content_word} || '%')
+      </otherwise>
+    </choose>
+  </select>
+  
+  <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
+  <select id="list_by_content_no_search_paging" 
+             resultType="dev.mvc.brcontent.BrcontentVO" parameterType="HashMap">
+   SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, r
+   FROM (
+              SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, rownum as r
+              FROM (
+                        SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
+                        FROM brcontent
+                        <choose>
+                          <when test="content_word == null or content_word == ''"> <!-- 검색하지 않는 경우 -->
+                          </when>
+                          <otherwise>
+                            WHERE (content_name LIKE '%' || #{content_word} || '%'  <!-- ||: 결합, %첫눈% -->
+                                                                  OR content_post LIKE '%' || #{content_word} || '%' 
+                                                                  OR content_word LIKE '%' || #{content_word} || '%')
+                          </otherwise>
+                        </choose>
+                        ORDER BY content_no DESC
+               )
+    )
+    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]>
+     
+<!--  1 page: WHERE r >= 1 AND r <= 10; 
+       2 page: WHERE r >= 11 AND r <= 20;
+       3 page: WHERE r >= 21 AND r <= 30; -->
+     
+  </select> 
+  
+  <!-- 패스워드 검사 -->
+  <select id="passwd_check" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt 
+    FROM brcontent
+    WHERE content_no=#{content_no} AND passwd=#{passwd}
+  </select>
+  
+ <!-- 텍스트 수정 -->
+  <update id="update_text" parameterType="dev.mvc.brcontent.BrcontentVO">
+    UPDATE brcontent
+    SET content_name=#{content_name}, content_post=#{content_post},  content_word=#{content_word}, content_mdtime=sysdate
+    WHERE content_no = #{content_no}
+  </update>
+  
+  <!-- 파일 수정 -->
+  <update id="update_file" parameterType="dev.mvc.brcontent.BrcontentVO">
+    UPDATE brcontent
+    SET file1=#{file1}, file1saved=#{file1saved}, thumb1=#{thumb1}, size1=#{size1}, content_mdtime=sysdate
+    WHERE content_no = #{content_no}
+  </update>
+  
+  <!-- 삭제 기능 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM brcontent
+    WHERE content_no=#{content_no}
+  </delete>
+ 
+ <!-- 추천 -->
+  <update id="update_recom" parameterType="int">
+    UPDATE brcontent
+    SET recom = recom + 1
+    WHERE content_no = #{content_no}
+  </update>
+ 
+ <update id="update_content_view" parameterType="int">
+    UPDATE brcontent
+    SET content_view = content_view + 1
+    WHERE content_no = #{content_no}
+  </update>
+ 
+</mapper> 
+
+

@@ -98,6 +98,13 @@
             <span class="span_fail">${param.nickname }님(${param.id }) 패스워드 변경에 실패했습니다.</span>
           </LI>                                                                      
         </c:when>  
+
+
+        <c:when test="${code == 'login_need'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_fail">${param.nickname }님(${param.id }) 매니저 로그인이 필요합니다.</span>
+          </LI>                                                                      
+        </c:when>  
         
         <c:otherwise>
           <LI class='li_none_left'>
