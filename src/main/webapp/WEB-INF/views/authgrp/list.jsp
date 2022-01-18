@@ -49,7 +49,7 @@
             </select>
             
             <label>Delete권한</label>
-            <select name='delete__auth'>
+            <select name='delete_auth'>
                 <option value='Y' selected="selected">Y</option>
                 <option value='N'>N</option>
             </select>        

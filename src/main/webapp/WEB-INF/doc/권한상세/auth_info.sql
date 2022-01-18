@@ -1,4 +1,4 @@
-DROP TABLE auth_info;
+--DROP TABLE auth_info;
 -- 제약 조건과 함께 삭제(제약 조건이 있어도 삭제됨, 권장하지 않음.)
 DROP TABLE auth_info CASCADE CONSTRAINTS; 
 
@@ -38,15 +38,42 @@ VALUES(auth_info_seq.nextval, 'N', 'N', 'N', 'Y');
 INSERT INTO auth_info(authno, create_auth, update_auth, delete_auth, read_auth)
 VALUES(auth_info_seq.nextval, 'N', 'N', 'N', 'N');
 
-
+-- 조회
 SELECT authno, create_auth, update_auth, delete_auth, read_auth FROM auth_info ORDER BY authno ASC;
 
 COMMIT;
 
---2. 조회
+--2. 특정 권한번호 상세목록
 SELECT authno, create_auth, update_auth, delete_auth, read_auth
 FROM auth_info
 WHERE authno = 1;
+
+
+
+--2-1. 권한번호별 상세목록
+SELECT authno, create_auth, update_auth, delete_auth, read_auth
+FROM auth_info
+ORDER BY authno ASC
+
+--2. 특정 권한번호 상세목록
+SELECT authno as r_authno, create_auth, update_auth, delete_auth, read_auth
+FROM auth_info
+WHERE authno = 1
+ORDER BY authno ASC
+
+-- 2-2. authgrp , auth_info 조인 
+SELECT c.authno, r.authname as r_authname,
+           c.create_auth, c.update_auth, c.delete_auth, c.read_auth
+FROM authgrp r, auth_info c
+WHERE r.authno = c.authno
+ORDER BY authno ASC, authno ASC
+
+-- 2-2.authgrp , auth_info 조인 
+SELECT r.authno as r_authno, r.authname as r_authname,
+           c.authno, c.create_auth, c.update_auth, c.delete_auth, c.read_auth
+FROM authgrp r, auth_info c
+WHERE r.authno = c.authno
+ORDER BY authno ASC, authno ASC
 
 --3. 수정
 UPDATE auth_info 
@@ -60,5 +87,5 @@ COMMIT;
 DELETE FROM auth_info;
  
   2) 특정 상세 권한 삭제
-DELETE FROM auth_info
-WHERE authno=4;
+--DELETE FROM auth_info
+--WHERE authno=4;
