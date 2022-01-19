@@ -17,6 +17,7 @@
             ${sessionScope.nickname } <A class='menu_link'  href='/member/mypage.do' >Mypage</A><span class='top_menu_sep'> </span>
             <A class='menu_link'  href='/member/logout.do' >Logout</A><span class='top_menu_sep'> </span>
             <A class='menu_link'  href='/member/list.do' >List(매니저)</A><span class='top_menu_sep'> </span>
+            <A class='menu_link'  href='/survey/create.do' >🍞빵추🍞</A><span class='top_menu_sep'> </span>
         
         </c:when>
         <c:otherwise> <%-- 로그인 하지 않은 경우 --%>
