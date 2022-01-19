@@ -16,6 +16,8 @@ CREATE TABLE brtalk(
         FOREIGN KEY (memberno) REFERENCES member (memberno)
 );
 
+DROP TABLE brtalk CASCADE CONSTRAINTS;
+
 COMMENT ON TABLE brtalk is 'HOT빵톡';
 COMMENT ON COLUMN brtalk.talk_no is 'HOT빵톡글 번호';
 COMMENT ON COLUMN brtalk.memberno is '회원 번호';
@@ -47,7 +49,7 @@ ORDER BY talk_no;
 -- R(Read)
 SELECT talk_no, memberno, talk_id, talk_name, talk_post, talk_view, recom, passwd, talk_word, talk_crtime, talk_mdtime
 FROM brtalk
-WHERE talk_no=16;
+WHERE talk_no=10;
      
 
 -- 게시글별 검색어를 통한 검색 레코드 갯수
@@ -56,11 +58,11 @@ SELECT COUNT(*) as cnt
     WHERE   (talk_name LIKE '%서울%' OR talk_post LIKE '%신사동%' OR talk_word LIKE '%#퀸아망%')
     
 --  게시글별 검색 목록 + 페이징 + 메인 이미지 
-SELECT talk_no, talk_id, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime, r
+SELECT talk_no, memberno, talk_id, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime, r
 FROM (
-           SELECT talk_no, talk_id, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime, rownum as r
+           SELECT talk_no, memberno, talk_id, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime, rownum as r
            FROM (
-                     SELECT talk_no, talk_id, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime
+                     SELECT talk_no, memberno, talk_id, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime
                      FROM brtalk
                      WHERE   (talk_name LIKE '%서울%' OR talk_post LIKE '%신사동%' OR talk_word LIKE '%#퀸아망%')
                      ORDER BY talk_no DESC
@@ -71,24 +73,23 @@ WHERE r >= 1 AND r <= 3;
 -- 패스워드 검사
 SELECT COUNT(*) as cnt 
     FROM brtalk
-    WHERE talk_no=16 AND passwd=1234
+    WHERE talk_no=10 AND passwd=1234
     
 -- 텍스트 수정 
  UPDATE brtalk
     SET talk_name= '부산 태성당', talk_post='부산 최고의 빵집!!',  talk_word='#단팥', talk_mdtime=sysdate
-    WHERE talk_no = 32
-
+    WHERE talk_no = 10
 
 -- 삭제 기능
 DELETE FROM brtalk
-    WHERE talk_no=32
+    WHERE talk_no=10
     
  -- 추천
  UPDATE brtalk
     SET recom = recom + 1
-    WHERE talk_no = 18
+    WHERE talk_no = 10
     
  -- 조회수 증가
  UPDATE brtalk
     SET talk_view = talk_view + 1
-    WHERE talk_no = 18
+    WHERE talk_no = 10
