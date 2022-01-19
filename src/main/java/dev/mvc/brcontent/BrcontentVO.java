@@ -30,7 +30,7 @@ public class BrcontentVO {
   /** 컨텐츠 번호 */
   private int content_no;
   /** 회원 번호 */
-  private int memberno = 0;
+  private int memberno;
   /** 작성자ID */
   private String content_id = "";
   /** 제목 */

@@ -18,21 +18,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       SELECT brdic_seq.nextval FROM dual
     </selectKey>
     
-     INSERT INTO brdic(dic_no, dic_name, dic_post, passwd, dic_word,
+     INSERT INTO brdic(dic_no, adminno, dic_name, dic_post, passwd, dic_word,
                                      file1, file1saved, thumb1, size1, dic_crtime, dic_mdtime)
-    VALUES(brdic_seq.nextval, #{dic_name}, #{dic_post}, #{passwd}, #{dic_word},
+    VALUES(brdic_seq.nextval, 3, #{dic_name}, #{dic_post}, #{passwd}, #{dic_word},
                 #{file1}, #{file1saved}, #{thumb1}, #{size1}, sysdate, sysdate)
   </insert>
   
     <!-- 일반적인 조회 -->
   <select id="read" resultType="dev.mvc.brdic.BrdicVO" parameterType="int">
-    SELECT dic_no, dic_name, dic_post, recom, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
+    SELECT dic_no, adminno, dic_name, dic_post, recom, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
     FROM brdic
     WHERE dic_no = #{dic_no}
   </select>
   
   <select id="list_dic_no_asc" resultType="dev.mvc.brdic.BrdicVO" parameterType="int">
-    SELECT dic_no, dic_name, dic_post, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
+    SELECT dic_no, adminno, dic_name, dic_post, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
     FROM brdic 
     ORDER BY dic_no ASC
   </select> 
@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 카테고리별 검색 목록 -->
   <select id="list_by_dic_no_search" resultType="dev.mvc.brdic.BrdicVO" 
              parameterType="HashMap">
-     SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
+     SELECT dic_no, adminno, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
     FROM brdic
     <choose>
       <when test="dic_word == null or dic_word == ''"> <!-- 검색하지 않는 경우 -->
@@ -72,11 +72,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
   <select id="list_by_dic_no_search_paging" 
              resultType="dev.mvc.brdic.BrdicVO" parameterType="HashMap">
-   SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1, r
+   SELECT dic_no, adminno, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1, r
    FROM (
-              SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1, rownum as r
+              SELECT dic_no, adminno, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1, rownum as r
               FROM (
-                        SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
+                        SELECT dic_no, adminno, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
                         FROM brdic
                         <choose>
                           <when test="dic_word == null or dic_word == ''"> <!-- 검색하지 않는 경우 -->

@@ -30,7 +30,7 @@ public class BrnoticeVO {
   /** 컨텐츠 번호 */
   private int notice_no;
   /** 관리자 번호 */
-  private int adminno = 0;
+  private int adminno;
   /** 작성자ID */
   private String notice_id = "";
   /** 제목 */
