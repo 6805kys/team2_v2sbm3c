@@ -3,10 +3,11 @@
 /**********************************/
 CREATE TABLE brdic(
 		dic_no INT NOT NULL PRIMARY KEY,
+		adminno                       NUMBER(10)   NULL,
 		dic_name VARCHAR(1000) NOT NULL,
 		dic_post VARCHAR(10000) NOT NULL,
 		recom NUMERIC(7) DEFAULT 0 NOT NULL,
-		dic_view NUMERIC(7) NOT NULL,
+		dic_view NUMERIC(7) DEFAULT 0 NOT NULL,
 		passwd VARCHAR(100) NOT NULL,
 		dic_word VARCHAR(300),
 		dic_crtime DATE NOT NULL,
@@ -19,6 +20,7 @@ CREATE TABLE brdic(
 
 COMMENT ON TABLE brdic is '빵 백과사전';
 COMMENT ON COLUMN brdic.dic_no is '빵 백과사전글 번호';
+COMMENT ON COLUMN brdic.adminno is '관리자 번호';
 COMMENT ON COLUMN brdic.dic_name is '빵 백과사전글 제목';
 COMMENT ON COLUMN brdic.dic_post is '빵 백과사전글 내용';
 COMMENT ON COLUMN brdic.recom  is '추천수';
@@ -39,23 +41,23 @@ CREATE SEQUENCE brdic_seq
   CACHE 2                        -- 2번은 메모리에서만 계산
   NOCYCLE;                      -- 다시 1부터 생성되는 것을 방지
   
- INSERT INTO brdic(dic_no, dic_name, dic_post, dic_view, recom, passwd, dic_word,
+ INSERT INTO brdic(dic_no, adminno, dic_name, dic_post, dic_view, recom, passwd, dic_word,
                                      file1, file1saved, thumb1, size1, dic_crtime, dic_mdtime)
-VALUES (brdic_seq.nextval, '단팥빵', '열량 : 625 kJ(149 kcal) 탄수화물 : 7.98g', 0, 0, 1234, '#단팥빵', '단팥빵.jpg', '단팥빵_1.jpg', '단팥빵_1_t.jpg', 495881, sysdate, sysdate);
+VALUES (brdic_seq.nextval, 2, '단팥빵', '열량 : 625 kJ(149 kcal) 탄수화물 : 7.98g', 0, 0, 1234, '#단팥빵', '단팥빵.jpg', '단팥빵_1.jpg', '단팥빵_1_t.jpg', 495881, sysdate, sysdate);
 
 
 -- R(List)
-SELECT dic_no, dic_name, dic_post, dic_view, recom, passwd, dic_word, file1, file1saved, thumb1, size1, dic_crtime, dic_mdtime
+SELECT dic_no, adminno, dic_name, dic_post, dic_view, recom, passwd, dic_word, file1, file1saved, thumb1, size1, dic_crtime, dic_mdtime
 FROM brdic
 ORDER BY dic_no;
       
 -- R(Read)
-SELECT dic_no, dic_name, dic_post, dic_view, recom, passwd, dic_word, file1, file1saved, thumb1, size1, dic_crtime, dic_mdtime
+SELECT dic_no, adminno, dic_name, dic_post, dic_view, recom, passwd, dic_word, file1, file1saved, thumb1, size1, dic_crtime, dic_mdtime
 FROM brdic
 WHERE dic_no=2;
       
 -- 게시글별 검색어를 통한 검색 레코드
-SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
+SELECT dic_no, adminno, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
 FROM brdic
 WHERE   (dic_name LIKE '%고로케%' OR dic_post LIKE '%고로케%' OR dic_word LIKE '%#고로케%')
 
@@ -65,11 +67,11 @@ FROM brdic
 WHERE   (dic_name LIKE '%고로케%' OR dic_post LIKE '%고로케%' OR dic_word LIKE '%#고로케%')
     
 --  게시글별 검색 목록 + 페이징 + 메인 이미지 
-SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1, r
+SELECT dic_no, adminno, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1, r
 FROM (
-           SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1, rownum as r
+           SELECT dic_no, adminno, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1, rownum as r
            FROM (
-                     SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
+                     SELECT dic_no, adminno, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
                      FROM brdic
                      WHERE   (dic_name LIKE '%고로케%' OR dic_post LIKE '%고로케%' OR dic_word LIKE '%#고로케%')
                      ORDER BY dic_no DESC

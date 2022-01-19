@@ -8,6 +8,7 @@ import lombok.ToString;
 
 /*
         content_no                            NUMBER(10)         NOT NULL         PRIMARY KEY,
+         memberno                       NUMBER(10)                   NULL,
         content_name VARCHAR(100) NOT NULL,
         content_post                             CLOB                  NOT NULL,
         recom                                 NUMBER(7)         DEFAULT 0         NOT NULL,
@@ -21,12 +22,15 @@ import lombok.ToString;
         file1saved                            VARCHAR(100)          NULL,
         thumb1                              VARCHAR(100)          NULL,
         size1                                 NUMBER(10)      DEFAULT 0 NULL,  
+        FOREIGN KEY (memberno) REFERENCES member (memberno)
  */
 
 @Getter @Setter @ToString
 public class BrcontentVO {
   /** 컨텐츠 번호 */
   private int content_no;
+  /** 회원 번호 */
+  private int memberno = 0;
   /** 작성자ID */
   private String content_id = "";
   /** 제목 */
@@ -75,6 +79,13 @@ public class BrcontentVO {
       this.content_no = content_no;
     }
     
+    public int getMemberno() {
+        return memberno;
+      }
+      public void setMemberno(int memberno) {
+        this.memberno = memberno;
+      }
+      
     public String getContent_id() {
         return content_id;
       }

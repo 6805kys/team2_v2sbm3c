@@ -3,6 +3,7 @@
 /**********************************/
 CREATE TABLE brcontent(
         content_no                            NUMBER(10)         NOT NULL         PRIMARY KEY,
+        memberno                       NUMBER(10)  NOT NULL ,
         content_name                        VARCHAR(100)            NOT NULL,
         content_post                             CLOB                  NOT NULL,
         recom                                 NUMBER(7)         DEFAULT 0         NOT NULL,
@@ -16,10 +17,12 @@ CREATE TABLE brcontent(
         thumb1                              VARCHAR(100)          NULL,
         size1                                 NUMBER(10)      DEFAULT 0 NULL,
         content_id                              CLOB            NULL
+        FOREIGN KEY (memberno) REFERENCES member (memberno)
 );
 
 COMMENT ON TABLE brcontent is 'BEST포토존';
 COMMENT ON COLUMN brcontent.content_no is 'BEST포토존글 번호';
+COMMENT ON COLUMN brcontent.memberno is '회원 번호';
 COMMENT ON COLUMN brcontent.content_name is 'BEST포토존글 제목';
 COMMENT ON COLUMN brcontent.content_post is 'BEST포토존글 내용';
 COMMENT ON COLUMN brcontent.content_recom  is '추천수';
@@ -41,26 +44,26 @@ CREATE SEQUENCE brcontent_seq
   CACHE 2                        -- 2번은 메모리에서만 계산
   NOCYCLE;                      -- 다시 1부터 생성되는 것을 방지
   
- INSERT INTO brcontent(content_no, content_id, content_name, content_post, content_view, content_recom, passwd, content_word,
+ INSERT INTO brcontent(content_no, memberno, content_id, content_name, content_post, content_view, content_recom, passwd, content_word,
                                      file1, file1saved, thumb1, size1, content_crtime, content_mdtime)
-VALUES (brcontent_seq.nextval, 'kd1', '부산 태성당', '부산 최고의 빵집!!', 0, 0, 1234, '#단팥', '파이01.jpg', '파이01.jpg', '파이01.jpg', 592, sysdate, sysdate);
+VALUES (brcontent_seq.nextval, 1, 'kd1', '부산 태성당', '부산 최고의 빵집!!', 0, 0, 1234, '#단팥', '파이01.jpg', '파이01.jpg', '파이01.jpg', 592, sysdate, sysdate);
 
 
 -- R(List)
-SELECT content_no, content_id, content_name, content_post, content_view, content_recom, passwd, content_word,
+SELECT content_no, memberno, content_id, content_name, content_post, content_view, content_recom, passwd, content_word,
                                      file1, file1saved, thumb1, size1, content_crtime, content_mdtime
 FROM brcontent
 ORDER BY content_no;
       
 -- R(Read)
-SELECT content_no, content_id, content_name, content_post, content_view, content_recom, passwd, content_word,
+SELECT content_no, memberno, content_id, content_name, content_post, content_view, content_recom, passwd, content_word,
                                      file1, file1saved, thumb1, size1, content_crtime, content_mdtime
 FROM brcontent
 WHERE content_no=18;
 
 
 -- 게시글별 검색어를 통한 검색 레코드
-SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
+SELECT content_no, memberno, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
     FROM brcontent
 WHERE   (content_name LIKE '%파이만쥬%' OR content_post LIKE '%파이만쥬%' OR content_word LIKE '%#파이%')
 
@@ -71,11 +74,11 @@ SELECT COUNT(*) as cnt
     WHERE   (content_name LIKE '%파이만쥬%' OR content_post LIKE '%파이만쥬%' OR content_word LIKE '%#파이%')
     
 --  게시글별 검색 목록 + 페이징 + 메인 이미지 
-SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, r
+SELECT content_no, memberno, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, r
 FROM (
-           SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, rownum as r
+           SELECT content_no, memberno, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, rownum as r
            FROM (
-                     SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
+                     SELECT content_no, memberno, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
                      FROM brcontent
                      WHERE   (content_name LIKE '%파이만쥬%' OR content_post LIKE '%파이만쥬%' OR content_word LIKE '%#파이%')
                      ORDER BY content_no DESC
