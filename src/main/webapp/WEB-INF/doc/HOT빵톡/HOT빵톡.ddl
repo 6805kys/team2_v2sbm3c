@@ -37,20 +37,55 @@ CREATE SEQUENCE brtalk_seq
 VALUES (brtalk_seq.nextval, 'kd1', '서울 신사 가로수길 퀸아망 맛집!!!', '1. 신사동 가로수길에 있는 "비파티세리" 추천합니다.. ', 0, 0, 1234, '#퀸아망', sysdate, sysdate);
 
 -- R(List)
-SELECT talk_no, talk_id, talk_name, talk_post, talk_view, recom, passwd, talk_word, content_crtime, content_mdtime
+SELECT talk_no, talk_id, talk_name, talk_post, talk_view, recom, passwd, talk_word, talk_crtime, talk_mdtime
 FROM brtalk
 ORDER BY talk_no;
       
 -- R(Read)
-SELECT talk_no, talk_id, talk_name, talk_post, talk_view, recom, passwd, talk_word, content_crtime, content_mdtime
+SELECT talk_no, talk_id, talk_name, talk_post, talk_view, recom, passwd, talk_word, talk_crtime, talk_mdtime
 FROM brtalk
 WHERE talk_no=16;
-      
--- U
-UPDATE brtalk
-SET content_name='빵의 성지 파리바게뜨 추천합니다!!'
-WHERE content_no=16;
+     
 
--- D
+-- 게시글별 검색어를 통한 검색 레코드 갯수
+SELECT COUNT(*) as cnt
+    FROM brtalk
+    WHERE   (talk_name LIKE '%서울%' OR talk_post LIKE '%신사동%' OR talk_word LIKE '%#퀸아망%')
+    
+--  게시글별 검색 목록 + 페이징 + 메인 이미지 
+SELECT talk_no, talk_id, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime, r
+FROM (
+           SELECT talk_no, talk_id, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime, rownum as r
+           FROM (
+                     SELECT talk_no, talk_id, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime
+                     FROM brtalk
+                     WHERE   (talk_name LIKE '%서울%' OR talk_post LIKE '%신사동%' OR talk_word LIKE '%#퀸아망%')
+                     ORDER BY talk_no DESC
+           )          
+)
+WHERE r >= 1 AND r <= 3;
+
+-- 패스워드 검사
+SELECT COUNT(*) as cnt 
+    FROM brtalk
+    WHERE talk_no=16 AND passwd=1234
+    
+-- 텍스트 수정 
+ UPDATE brtalk
+    SET talk_name= '부산 태성당', talk_post='부산 최고의 빵집!!',  talk_word='#단팥', talk_mdtime=sysdate
+    WHERE talk_no = 32
+
+
+-- 삭제 기능
 DELETE FROM brtalk
-WHERE talk_no=16;
+    WHERE talk_no=32
+    
+ -- 추천
+ UPDATE brtalk
+    SET recom = recom + 1
+    WHERE talk_no = 18
+    
+ -- 조회수 증가
+ UPDATE brtalk
+    SET talk_view = talk_view + 1
+    WHERE talk_no = 18

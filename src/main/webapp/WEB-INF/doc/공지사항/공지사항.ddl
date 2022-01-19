@@ -46,11 +46,46 @@ SELECT notice_no, notice_id, notice_name, notice_post, notice_view, recom, passw
 FROM brnotice
 WHERE notice_no=2;
 
--- U
-UPDATE brnotice
-SET notice_name='공지사항 변경사항 입니다!!!'
-WHERE notice_no=2;
 
--- D
+-- 게시글별 검색어를 통한 검색 레코드 갯수
+SELECT COUNT(*) as cnt
+    FROM brnotice
+    WHERE   (notice_name LIKE '%비회원%' OR notice_post LIKE '%내용%' OR notice_word LIKE '%#검색어%')
+    
+--  게시글별 검색 목록 + 페이징 + 메인 이미지 
+SELECT notice_no, notice_id, notice_name, notice_post, recom, notice_view, passwd, notice_word, notice_crtime, notice_mdtime, r
+FROM (
+           SELECT notice_no, notice_id, notice_name, notice_post, recom, notice_view, passwd, notice_word, notice_crtime, notice_mdtime, rownum as r
+           FROM (
+                     SELECT notice_no, notice_id, notice_name, notice_post, recom, notice_view, passwd, notice_word, notice_crtime, notice_mdtime
+                     FROM brnotice
+                     WHERE   (notice_name LIKE '%비회원%' OR notice_post LIKE '%내용%' OR notice_word LIKE '%#검색어%')
+                     ORDER BY notice_no DESC
+           )          
+)
+WHERE r >= 1 AND r <= 3;
+
+-- 패스워드 검사
+SELECT COUNT(*) as cnt 
+    FROM brnotice
+    WHERE notice_no=4 AND passwd=1234
+    
+-- 텍스트 수정 
+ UPDATE brnotice
+    SET notice_name= '공지', notice_post='공지',  notice_word='#단팥', notice_mdtime=sysdate
+    WHERE notice_no = 6
+
+
+-- 삭제 기능
 DELETE FROM brnotice
-WHERE notice_no=16;
+    WHERE notice_no=6
+    
+ -- 추천
+ UPDATE brnotice
+    SET recom = recom + 1
+    WHERE notice_no = 6
+    
+ -- 조회수 증가
+ UPDATE brnotice
+    SET notice_view = notice_view + 1
+    WHERE notice_no = 6

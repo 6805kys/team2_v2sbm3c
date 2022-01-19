@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY content_no DESC   
   </select>
    
-  <!-- 카테고리별 검색 레코드 갯수 -->
+  <!-- 게시글별 검색 레코드 갯수 -->
   <select id="search_count" resultType="int" parameterType="HashMap">
     SELECT COUNT(*) as cnt
     FROM brcontent
@@ -69,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </choose>
   </select>
   
-  <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
+  <!-- 게시글별 검색 목록 + 페이징 + 메인 이미지 -->   
   <select id="list_by_content_no_search_paging" 
              resultType="dev.mvc.brcontent.BrcontentVO" parameterType="HashMap">
    SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, r
