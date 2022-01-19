@@ -8,6 +8,7 @@ import lombok.ToString;
 
 /*
         talk_no                            NUMBER(10)         NOT NULL         PRIMARY KEY,
+        memberno                       NUMBER(10)   NULL ,
         talk_id                               VARCHAR2(15)         NOT NULL,
         talk_name VARCHAR(100) NOT NULL,
         talk_post                             CLOB                  NOT NULL,
@@ -28,6 +29,8 @@ import lombok.ToString;
 public class BrtalkVO {
   /** 컨텐츠 번호 */
   private int talk_no;
+  /** 회원 번호 */
+  private int memberno = 0;
   /** 작성자ID */
   private String talk_id = "";
   /** 제목 */
@@ -57,6 +60,13 @@ public class BrtalkVO {
     public void setTalk_no(int talk_no) {
       this.talk_no = talk_no;
     }
+    
+    public int getMemberno() {
+        return memberno;
+      }
+      public void setMemberno(int memberno) {
+        this.memberno = memberno;
+      }
     
     public String getTalk_id() {
         return talk_id;
