@@ -175,6 +175,7 @@ public class BrnoticeCont {
       ModelAndView mav = new ModelAndView();
 
       BrnoticeVO brnoticeVO = this.brnoticeProc.read(notice_no);
+      int cnt = this.brnoticeProc.update_notice_view(notice_no);
       mav.addObject("brnoticeVO", brnoticeVO); // request.setAttribute("noticesVO", noticesVO);
       
       mav.setViewName("/brnotice/read"); // /WEB-INF/views/notices/read.jsp
