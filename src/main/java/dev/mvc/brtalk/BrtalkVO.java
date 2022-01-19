@@ -38,8 +38,6 @@ public class BrtalkVO {
   private int recom;
   /** 조회수 */
   private int talk_view = 0;
-  /** 댓글수 */
-  private int replycnt = 0;
   /** 패스워드 */
   private String passwd = "";
   /** 검색어 */
@@ -100,13 +98,6 @@ public class BrtalkVO {
       this.talk_view = talk_view;
     }
 
-    public int getReplycnt() {
-      return replycnt;
-    }
-
-    public void setReplycnt(int replycnt) {
-      this.replycnt = replycnt;
-    }
 
     public String getPasswd() {
       return passwd;

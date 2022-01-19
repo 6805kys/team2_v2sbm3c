@@ -37,8 +37,6 @@ public class BrdicVO {
   private int recom;
   /** 조회수 */
   private int dic_view = 0;
-  /** 댓글수 */
-  private int replycnt = 0;
   /** 패스워드 */
   private String passwd = "";
   /** 검색어 */
@@ -109,13 +107,6 @@ public class BrdicVO {
       this.dic_view = dic_view;
     }
 
-    public int getReplycnt() {
-      return replycnt;
-    }
-
-    public void setReplycnt(int replycnt) {
-      this.replycnt = replycnt;
-    }
 
     public String getPasswd() {
       return passwd;

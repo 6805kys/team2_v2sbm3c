@@ -174,9 +174,15 @@ public class BrcontentCont {
     public ModelAndView read(int content_no) {
       ModelAndView mav = new ModelAndView();
       
+
       BrcontentVO brcontentVO = this.brcontentProc.read(content_no);
-      mav.addObject("brcontentVO", brcontentVO); // request.setAttribute("contentsVO", contentsVO);
+      int cnt = this.brcontentProc.update_content_view(content_no);
+     // int cnt = this.brcontentProc.update_content_view(brcontentVO.getContent_no());
+      System.out.println("-> content_no: " + brcontentVO.getContent_no());
+      System.out.println("-> cnt: " + cnt);
       
+      mav.addObject("brcontentVO", brcontentVO); // request.setAttribute("contentsVO", contentsVO);
+      mav.addObject("content_no", content_no);
       mav.setViewName("/brcontent/read"); // /WEB-INF/views/contents/read.jsp   
       
       return mav;
@@ -222,6 +228,8 @@ public class BrcontentCont {
       @RequestMapping(value = "/brcontent/list_by_content_no_search_paging.do", method = RequestMethod.GET)
       public ModelAndView list_by_content_no_search_paging(@RequestParam(value = "content_word", defaultValue = "") String content_word,
                                                                              @RequestParam(value = "now_page", defaultValue = "1") int now_page) {
+        System.out.println("-> list_by_content_no_search_paging call.");
+        
         System.out.println("--> now_page: " + now_page);
 
         ModelAndView mav = new ModelAndView();
