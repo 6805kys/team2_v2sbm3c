@@ -88,6 +88,7 @@
   
   <table class="table table-striped" style='width: 400%;'>
     <colgroup>
+      <col style="width: 10%;"></col>
       <col style="width: 11%;"></col>
       <col style="width: 40%;"></col>
       <col style="width: 10%;"></col>
@@ -96,6 +97,7 @@
      <%-- table 컬럼 --%>
      <thead>
       <tr>
+       <th style='text-align: center;'>관리자 번호</th> 
        <th style='text-align: center;'>🍞빵 목록🍞</th> 
        <th style='text-align: center;'> </th>
         <th style='text-align: center;'>등록일</th>
@@ -118,8 +120,10 @@
         <c:set var="dic_mdtime" value="${brdicVO.dic_mdtime.substring(0, 10) }" />
         <c:set var="recom" value="${brdicVO.recom }" />
         <c:set var="dic_view" value="${brdicVO.dic_view }" />
+        <c:set var="adminno" value="${brdicVO.adminno }" />
         
 <tr> 
+        <td style='vertical-align: middle; text-align: center;'>${brdicVO.adminno}</td>
           <td style='vertical-align: middle; text-align: center;'>
             <c:choose>
               <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}">

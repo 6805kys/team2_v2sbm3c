@@ -8,6 +8,7 @@ import lombok.ToString;
 
 /*
         dic_no                            NUMBER(10)         NOT NULL         PRIMARY KEY,
+       adminno                       NUMBER(10)   NULL,
         dic_name VARCHAR(100) NOT NULL,
         dic_post                             CLOB                  NOT NULL,
         recom                                 NUMBER(7)         DEFAULT 0         NOT NULL,
@@ -27,8 +28,8 @@ import lombok.ToString;
 public class BrdicVO {
   /** 컨텐츠 번호 */
   private int dic_no;
-  /** 작성자ID */
-  /** private String dic_id; */
+  /** 관리자 번호 */
+  private int adminno;
   /** 제목 */
   private String dic_name = "";
   /** 내용 */
@@ -75,6 +76,13 @@ public class BrdicVO {
       this.dic_no = dic_no;
     }
 
+    public int getAdminno() {
+        return adminno;
+      }
+      public void setMemberno(int adminno) {
+        this.adminno = adminno;
+      }
+    
     public String getDic_name() {
       return dic_name;
     }

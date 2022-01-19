@@ -9,7 +9,6 @@ import lombok.ToString;
 /*
         talk_no                            NUMBER(10)         NOT NULL         PRIMARY KEY,
         memberno                       NUMBER(10)   NULL ,
-        talk_id                               VARCHAR2(15)         NOT NULL,
         talk_name VARCHAR(100) NOT NULL,
         talk_post                             CLOB                  NOT NULL,
         recom                                 NUMBER(7)         DEFAULT 0         NOT NULL,
@@ -30,7 +29,7 @@ public class BrtalkVO {
   /** 컨텐츠 번호 */
   private int talk_no;
   /** 회원 번호 */
-  private int memberno = 0;
+  private int memberno;
   /** 작성자ID */
   private String talk_id = "";
   /** 제목 */
