@@ -2,22 +2,23 @@
 /* Table Name: 빵 백과사전 */
 /**********************************/
 CREATE TABLE brdic(
-        dic_no INT NOT NULL PRIMARY KEY,
+		dic_no INT NOT NULL PRIMARY KEY,
         adminno                       NUMBER(10)   NULL,
-        dic_name VARCHAR(1000) NOT NULL,
-        dic_post VARCHAR(10000) NOT NULL,
-        recom NUMERIC(7) DEFAULT 0 NOT NULL,
-        dic_view NUMERIC(7) DEFAULT 0 NOT NULL,
-        passwd VARCHAR(100) NOT NULL,
-        dic_word VARCHAR(300),
-        dic_crtime DATE NOT NULL,
-        dic_mdtime DATE NOT NULL,
-        file1 VARCHAR(100),
-        file1saved VARCHAR(100),
-        thumb1 VARCHAR(100),
-        size1 NUMERIC(10) DEFAULT 0,
+		dic_name VARCHAR(1000) NOT NULL,
+		dic_post VARCHAR(10000) NOT NULL,
+		recom NUMERIC(7) DEFAULT 0 NOT NULL,
+		dic_view NUMERIC(7) DEFAULT 0 NOT NULL,
+		passwd VARCHAR(100) NOT NULL,
+		dic_word VARCHAR(300),
+		dic_crtime DATE NOT NULL,
+		dic_mdtime DATE NOT NULL,
+		file1 VARCHAR(100),
+		file1saved VARCHAR(100),
+		thumb1 VARCHAR(100),
+		size1 NUMERIC(10) DEFAULT 0,
         FOREIGN KEY (adminno) REFERENCES admin (adminno)
 );
+
 
 COMMENT ON TABLE brdic is '빵 백과사전';
 COMMENT ON COLUMN brdic.dic_no is '빵 백과사전글 번호';
@@ -34,7 +35,6 @@ COMMENT ON COLUMN brdic.file1 is '메인 이미지';
 COMMENT ON COLUMN brdic.file1saved is '실제로 저장된 메인 이미지';
 COMMENT ON COLUMN brdic.thumb1 is '메인 이미지 preview';
 COMMENT ON COLUMN brdic.size1 is '메인 이미지 크기';
-
 
 CREATE SEQUENCE brdic_seq
   START WITH 1                -- 시작 번호
@@ -94,7 +94,7 @@ SELECT COUNT(*) as cnt
     
 -- 파일(사진) 수정
 UPDATE brdic
-    SET file1= '바게뜨.jpg', file1saved='꽈배기.jpg', thumb1='꽈배기_t.jpg', size1=198805, dic_mdtime=sysdate
+    SET file1= '바게뜨.jpg', file1saved='바게뜨.jpg', thumb1='바게뜨_t.jpg', size1=198805, dic_mdtime=sysdate
     WHERE dic_no = 6
 
 -- 삭제 기능
