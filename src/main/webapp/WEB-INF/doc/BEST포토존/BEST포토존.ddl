@@ -57,12 +57,58 @@ SELECT content_no, content_id, content_name, content_post, content_view, content
                                      file1, file1saved, thumb1, size1, content_crtime, content_mdtime
 FROM brcontent
 WHERE content_no=18;
-      
--- U
-UPDATE brcontent
-SET content_name='비건빵의 최고 맛집 밀토니아!!'
-WHERE content_no=18;
 
--- D
+
+-- 게시글별 검색어를 통한 검색 레코드
+SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
+    FROM brcontent
+WHERE   (content_name LIKE '%파이만쥬%' OR content_post LIKE '%파이만쥬%' OR content_word LIKE '%#파이%')
+
+
+-- 게시글별 검색어를 통한 검색 레코드 갯수
+SELECT COUNT(*) as cnt
+    FROM brcontent
+    WHERE   (content_name LIKE '%파이만쥬%' OR content_post LIKE '%파이만쥬%' OR content_word LIKE '%#파이%')
+    
+--  게시글별 검색 목록 + 페이징 + 메인 이미지 
+SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, r
+FROM (
+           SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, rownum as r
+           FROM (
+                     SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
+                     FROM brcontent
+                     WHERE   (content_name LIKE '%파이만쥬%' OR content_post LIKE '%파이만쥬%' OR content_word LIKE '%#파이%')
+                     ORDER BY content_no DESC
+           )          
+)
+WHERE r >= 1 AND r <= 3;
+
+-- 패스워드 검사
+SELECT COUNT(*) as cnt 
+    FROM brcontent
+    WHERE content_no=16 AND passwd=1234
+    
+-- 텍스트 수정 
+ UPDATE brcontent
+    SET content_name= '부산 태성당', content_post='부산 최고의 빵집!!',  content_word='#단팥', content_mdtime=sysdate
+    WHERE content_no = 32
+
+    
+-- 파일(사진) 수정
+UPDATE brcontent
+    SET file1= '백카페.jpg', file1saved='백카페_2.jpg', thumb1='백카페_2_t.jpg', size1=561990, content_mdtime=sysdate
+    WHERE content_no = 32
+
+-- 삭제 기능
 DELETE FROM brcontent
-WHERE content_no=18;
+    WHERE content_no=32
+    
+ -- 추천
+ UPDATE brcontent
+    SET recom = recom + 1
+    WHERE content_no = 18
+    
+ -- 조회수 증가
+ UPDATE brcontent
+    SET content_view = content_view + 1
+    WHERE content_no = 18

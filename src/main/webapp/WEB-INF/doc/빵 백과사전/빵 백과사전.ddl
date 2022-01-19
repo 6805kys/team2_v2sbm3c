@@ -54,11 +54,55 @@ SELECT dic_no, dic_name, dic_post, dic_view, recom, passwd, dic_word, file1, fil
 FROM brdic
 WHERE dic_no=2;
       
--- U
-UPDATE brdic
-SET dic_name='바게뜨'
-WHERE dic_no=2;
+-- 게시글별 검색어를 통한 검색 레코드
+SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
+FROM brdic
+WHERE   (dic_name LIKE '%고로케%' OR dic_post LIKE '%고로케%' OR dic_word LIKE '%#고로케%')
 
--- D
+-- 게시글별 검색어를 통한 검색 레코드 갯수
+SELECT COUNT(*) as cnt
+FROM brdic
+WHERE   (dic_name LIKE '%고로케%' OR dic_post LIKE '%고로케%' OR dic_word LIKE '%#고로케%')
+    
+--  게시글별 검색 목록 + 페이징 + 메인 이미지 
+SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1, r
+FROM (
+           SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1, rownum as r
+           FROM (
+                     SELECT dic_no, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
+                     FROM brdic
+                     WHERE   (dic_name LIKE '%고로케%' OR dic_post LIKE '%고로케%' OR dic_word LIKE '%#고로케%')
+                     ORDER BY dic_no DESC
+           )          
+)
+WHERE r >= 1 AND r <= 3;
+
+-- 패스워드 검사
+SELECT COUNT(*) as cnt 
+    FROM brdic
+    WHERE dic_no=6 AND passwd=1234
+    
+-- 텍스트 수정 
+ UPDATE brdic
+    SET dic_name= '바게뜨', dic_post='탄수화물: 16.28g',  dic_word='#바게뜨', dic_mdtime=sysdate
+    WHERE dic_no = 6
+
+    
+-- 파일(사진) 수정
+UPDATE brdic
+    SET file1= '바게뜨.jpg', file1saved='꽈배기.jpg', thumb1='꽈배기_t.jpg', size1=198805, dic_mdtime=sysdate
+    WHERE dic_no = 6
+
+-- 삭제 기능
 DELETE FROM brdic
-WHERE dic_no=2;
+    WHERE dic_no=6
+    
+ -- 추천
+ UPDATE brdic
+    SET recom = recom + 1
+    WHERE dic_no = 6
+    
+ -- 조회수 증가
+ UPDATE brdic
+    SET dic_view = dic_view + 1
+    WHERE dic_no = 6
