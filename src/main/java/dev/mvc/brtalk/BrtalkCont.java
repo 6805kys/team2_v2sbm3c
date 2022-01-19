@@ -175,6 +175,7 @@ public class BrtalkCont {
       ModelAndView mav = new ModelAndView();
 
       BrtalkVO brtalkVO = this.brtalkProc.read(talk_no);
+      int cnt = this.brtalkProc.update_talk_view(talk_no);
       mav.addObject("brtalkVO", brtalkVO); // request.setAttribute("talksVO", talksVO);
       
       mav.setViewName("/brtalk/read"); // /WEB-INF/views/talks/read.jsp

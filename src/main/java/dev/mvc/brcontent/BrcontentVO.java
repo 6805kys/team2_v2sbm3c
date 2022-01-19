@@ -37,8 +37,6 @@ public class BrcontentVO {
   private int recom;
   /** 조회수 */
   private int content_view = 0;
-  /** 댓글수 */
-  private int replycnt = 0;
   /** 패스워드 */
   private String passwd = "";
   /** 검색어 */
@@ -113,16 +111,8 @@ public class BrcontentVO {
       return content_view;
     }
 
-    public void setContent_view(int Content_view) {
+    public void setContent_view(int content_view) {
       this.content_view = content_view;
-    }
-
-    public int getReplycnt() {
-      return replycnt;
-    }
-
-    public void setReplycnt(int replycnt) {
-      this.replycnt = replycnt;
     }
 
     public String getPasswd() {
