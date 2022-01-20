@@ -1,16 +1,12 @@
 package dev.mvc.auth_info;
 
-public class Auth_infoVO {
-    /*
-     * authno NUMBER(10) NOT NULL,
-     * create_auth CHAR(1) NULL,
-     * update_auth CHAR(1) NULL,
-     * delete_auth CHAR(1) NULL,
-     * read_auth CHAR(1) NULL,
-     * FOREIGN KEY (AUTHNO) REFERENCES authgrp(AUTHNO)
-     */
+public class Authgrp_Auth_infoVO {
+    /** 권한그룹 번호 */
+    private int r_authno;
+    /** 권한그룹 이름 */
+    private String r_authname = "";
     
-    /** 권한 번호 */
+    /** 권한그룹 번호 */
     private int authno;
     /** 등록 권한 */
     private String create_auth = "";
@@ -21,22 +17,21 @@ public class Auth_infoVO {
     /** 조회 권한 */
     private String read_auth = "";
     
-    public Auth_infoVO() {
-        
+    public int getR_authno() {
+        return r_authno;
     }
-    
-
-    @Override
-    public String toString() {
-        return "Auth_infoVO [authno=" + authno + ", create_auth=" + create_auth + ", update_auth=" + update_auth
-                + ", delete_auth=" + delete_auth + ", read_auth=" + read_auth + "]";
+    public void setR_authno(int r_authno) {
+        this.r_authno = r_authno;
     }
-    
+    public String getR_authname() {
+        return r_authname;
+    }
+    public void setR_authname(String r_authname) {
+        this.r_authname = r_authname;
+    }
     public int getAuthno() {
         return authno;
     }
-
-
     public void setAuthno(int authno) {
         this.authno = authno;
     }
@@ -65,8 +60,11 @@ public class Auth_infoVO {
         this.read_auth = read_auth;
     }
     
+    @Override
+    public String toString() {
+        return "Authgrp_Auth_infoVO [r_authno=" + r_authno + ", r_authname=" + r_authname + ", authno=" + authno
+                + ", create_auth=" + create_auth + ", update_auth=" + update_auth + ", delete_auth=" + delete_auth
+                + ", read_auth=" + read_auth + "]";
+    }
     
-   
-    
-
 }

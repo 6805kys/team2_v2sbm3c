@@ -11,6 +11,7 @@
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
  
+
 <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">

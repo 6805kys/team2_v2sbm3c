@@ -4,10 +4,79 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace = "dev.mvc.auth_info.Auth_infoDAOInter">
-    <insert id = "create" parameterType="dev.mvc.authgrp.AuthgrpVO">
+  <insert id = "create" parameterType="dev.mvc.auth_info.Auth_infoVO">
         INSERT INTO auth_info(authno, create_auth, update_auth, delete_auth, read_auth)
-        VALUES (authgrp_seq.nextval, #{create_auth}, #{update_auth}, #{delete_auth}, #{read_auth})
-    </insert>
+        VALUES (#{authno}, #{create_auth}, #{update_auth}, #{delete_auth}, #{read_auth})
+  </insert>
+    
+  <!-- 
+  전체 목록
+  레코드 갯수 만큼 AuthgrpVO 객체를 만들어 ArrayList에 저장하여 리턴,
+  List<Auth_infoVO> list = new ArrayList<Auth_infoVO>(); 
+  -->
+  <select id="list_all" resultType="dev.mvc.auth_info.Auth_infoVO">
+    SELECT authno, create_auth, update_auth, delete_auth, read_auth
+    FROM auth_info
+    ORDER BY authno ASC
+  </select>
+  
+  <!-- 권한 그룹별 목록 -->
+  <select id="list_by_authno" resultType="dev.mvc.auth_info.Auth_infoVO" parameterType="int">
+    SELECT authno, create_auth, update_auth, delete_auth, read_auth
+    FROM auth_info
+    WHERE authno = #{authno}
+    ORDER BY authno ASC
+  </select>
+  
+  <!-- 권한 그룹별 목록 -->
+  <select id="list_by_r_authno" resultType="dev.mvc.auth_info.Authgrp_Auth_infoVO" parameterType="int">
+    SELECT authno as r_authno, create_auth, update_auth, delete_auth, read_auth
+    FROM auth_info
+    WHERE authno = #{authno}
+    ORDER BY authno ASC
+  </select>
+
+  <!-- Authgrp + Auth_info, 연결 목록 -->
+  <select id="list_all_join" resultType="dev.mvc.auth_info.Authgrp_Auth_infoVO">
+    SELECT r.authno as r_authno, r.authname as r_authname,
+               c.authno, c.create_auth, c.update_auth, c.delete_auth, c.read_auth
+    FROM authgrp r, auth_info c
+    WHERE r.authno = c.authno
+    ORDER BY authno ASC, authno ASC
+  </select>
+  
+  <!-- 조회, id: read, 입력: authno, 리턴: Auth_infoVO -->
+  <select id="read" resultType="dev.mvc.auth_info.Auth_infoVO" parameterType="int">
+    SELECT authno, create_auth, update_auth, delete_auth, read_auth
+    FROM auth_info
+    WHERE authno=#{authno}
+  </select>
+  
+  <update id="update" parameterType="dev.mvc.auth_info.Auth_infoVO">
+    UPDATE auth_info
+    SET create_auth=#{create_auth}, update_auth=#{update_auth}, delete_auth=#{delete_auth}, read_auth=#{read_auth}
+    WHERE authno = #{authno}
+  </update> 
+  
+  <!-- 삭제, return: int -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM auth_info
+    WHERE authno = #{authno}
+  </delete>
+ 
+  <!-- 특정 그룹에 속한 레코드 갯수 산출 -->
+  <select id="count_by_categrpno" resultType="int" parameterType="int">
+    SELECT COUNT(*) as cnt 
+    FROM cate 
+    WHERE categrpno=#{categrpno}
+  </select>   
+  
+  <!-- categrpno가 같은 모든 레코드 삭제 -->
+  <delete id="delete_by_categrpno" parameterType="int">
+    DELETE FROM cate
+    WHERE categrpno=#{categrpno}
+  </delete>
+
 
 
 </mapper>

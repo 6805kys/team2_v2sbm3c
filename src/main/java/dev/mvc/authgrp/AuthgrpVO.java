@@ -11,6 +11,21 @@ public class AuthgrpVO {
     /** 권한그룹명 */
     private String authname = "";
     
+    public AuthgrpVO() {
+        
+    }
+    
+    public AuthgrpVO(int authno, String authname) {
+        this.authno = authno;
+        this.authname = authname;      
+    }
+    
+    @Override
+    public String toString() {
+        return "AuthgrpVO [authno=" + authno + ", authname" + authname + "]";
+    }
+    
+    
     public int getAuthno() {
         return authno;
     }
@@ -23,6 +38,8 @@ public class AuthgrpVO {
     public void setAuthname(String authname) {
         this.authname = authname;
     }
+    
+
     
     
 }

@@ -1,4 +1,4 @@
-DROP TABLE authgrp;
+--DROP TABLE authgrp;
 -- 제약 조건과 함께 삭제(제약 조건이 있어도 삭제됨, 권장하지 않음.)
 DROP TABLE authgrp CASCADE CONSTRAINTS; 
 
@@ -71,6 +71,28 @@ INSERT ALL
     INTO auth_info VALUES(authgrp_seq.nextval, 'N', 'N', 'N', 'Y')
 SELECT *
     FROM DUAL;
+    
+-- 1-2 여러 테이블에 동시에 INSERT 
+--*****************************************************************
+--INSERT ALL
+--    WHEN 조건1 THEN
+--        INTO 테이블명 (컬럼1, 컬럼2,...) VALUES(값1, 값2, ...)
+--    WHEN 조건 2 THEN
+--        INTO 테이블명 (컬럼1, 컬럼2,...) VALUES(값1, 값2, ...)
+--    ELSE
+--        INTO 톄이블명 (컬럼1, 컬럼2, ...) VALUES(값1, 값2, ...)
+--    SELECT문
+--*******************************************************************
+--INSERT ALL
+--    WHEN gradeno=1 THEN
+--        INTO authgrp (authno, authname) VALUES(authgrp_seq.nextval, '테스트그룹')
+--    WHEN gradeno=1 THEN
+--        INTO auth_info (authno, create_auth, update_auth, delete_auth, read_auth) VALUES(auth_info_seq.nextval, 'N', 'N', 'N', 'N')
+--    SELECT authno, authname, create_auth, update_auth, delete_auth, read_auth
+--    FROM MEMBER;
+--  SQL 오류: ORA-00904: "READ_AUTH": 부적합한 식별자
+    
+    
 
 --2. 조회
 SELECT authno, authname
@@ -89,5 +111,5 @@ COMMIT;
 DELETE FROM authgrp;
  
   2) 특정 권한그룹 삭제
-DELETE FROM authgrp
-WHERE authno=6;
+--DELETE FROM authgrp
+--WHERE authno=6;
