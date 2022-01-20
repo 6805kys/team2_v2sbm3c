@@ -1,6 +1,6 @@
---DROP TABLE grade;
+DROP TABLE grade;
 -- 제약 조건과 함께 삭제(제약 조건이 있어도 삭제됨, 권장하지 않음.)
---DROP TABLE grade CASCADE CONSTRAINTS; 
+DROP TABLE grade CASCADE CONSTRAINTS; 
 
 --테이블 생성
 CREATE TABLE grade (
@@ -61,8 +61,8 @@ COMMIT;
 
 --4. 삭제
   1) 모두 삭제
---DELETE FROM grade;
+DELETE FROM grade;
  
   2) 특정 등급 삭제
---DELETE FROM grade
---WHERE gradeno=31;
+DELETE FROM grade
+WHERE gradeno=31;

@@ -46,7 +46,7 @@
     } else {  // when ID is entered
       params = 'id=' + id;
       // var params = $('#frm').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
-      // alert('params: ' + params);
+      alert('params: ' + params);
 
       $.ajax({
         url: './checkID.do', // spring execute
@@ -79,21 +79,21 @@
           console.log(error);
         }
       });
-
     }
-
   }
+
+
 
   // jQuery ajax 요청
   function checkNICKNAME() {
       // $('#btn_close').attr("data-focus", "이동할 태그 지정");
       
       var frm = $('#frm'); // id가 frm인 태그 검색
-      var id = $('#nickname', frm).val(); // frm 폼에서 id가 'nickname'인 태그 검색
+      var nickname = $('#nickname', frm).val(); // frm 폼에서 id가 'nickname'인 태그 검색 //1
       var params = '';
       var msg = '';
     
-      if ($.trim(id).length == 0) { // id를 입력받지 않은 경우
+      if ($.trim(nickname).length == 0) { // id를 입력받지 않은 경우 //1
         msg = '· 닉네임을 입력하세요.<br>· 닉네임 입력은 필수 입니다.<br>· 닉네임는 3자이상 권장합니다.';
         
         $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
@@ -115,7 +115,7 @@
           dataType: 'json', // 응답 형식: json, html, xml...
           data: params,      // 데이터
           success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
-            alert(rdata);
+            //alert(rdata);
             var msg = "";
             
             if (rdata.cnt > 0) {
@@ -138,7 +138,6 @@
           }
         });
       }
-
   }
 
   function setFocus() {  // focus 이동
@@ -173,7 +172,7 @@
 </head>
 
 <body>
-    <jsp:include page="../menu/top.jsp" flush='false' />
+  <jsp:include page="../menu/top.jsp" flush='false' />
 
     <!-- ******************** Modal 알림창 시작 ******************** -->
     <div id="modal_panel" class="modal fade" role="dialog">
@@ -210,10 +209,10 @@
       <A href='./create.do'>회원 가입</A>  
   </ASIDE> 
 
-   <div class='menu_line'></div><br>
+  <div class='menu_line'></div><br>
 
 
-    <FORM name='frm' id='frm' method='POST' action='./create.do' class="form-horizontal">
+  <FORM name='frm' id='frm' method='POST' action='./create.do' class="form-horizontal">
     
     <div class="form-group" style="margin-top: auto;">
       <label for="id" class="col-md-5 control-label" style='font-size: 0.9em;'>ID</label>

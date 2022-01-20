@@ -88,4 +88,4 @@ DELETE FROM auth_info;
  
   2) 특정 상세 권한 삭제
 --DELETE FROM auth_info
---WHERE authno=4;
+--WHERE authno=6;

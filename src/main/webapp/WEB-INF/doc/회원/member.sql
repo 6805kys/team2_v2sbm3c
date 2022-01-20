@@ -8,7 +8,7 @@
 --DROP TABLE brcontent;
 --DROP TABLE member;
 -- 제약 조건과 함께 삭제(제약 조건이 있어도 삭제됨, 권장하지 않음.)
-DROP TABLE member CASCADE CONSTRAINTS; 
+--DROP TABLE member CASCADE CONSTRAINTS; 
 
 CREATE TABLE member (
   memberno NUMBER(10) NOT NULL, -- 회원 번호, 레코드를 구분하는 컬럼 
@@ -33,7 +33,7 @@ COMMENT ON COLUMN MEMBER.EMAIL is '이메일';
 COMMENT ON COLUMN MEMBER.MDATE is '가입일';
 COMMENT ON COLUMN MEMBER.GRADENO is '등급번호';
 
-DROP SEQUENCE member_seq;
+--DROP SEQUENCE member_seq;
 CREATE SEQUENCE member_seq
   START WITH 1              -- 시작 번호
   INCREMENT BY 1          -- 증가값
@@ -59,9 +59,8 @@ INSERT INTO member(memberno, id, passwd, nickname, tel, email, mdate, gradeno)
 VALUES (member_seq.nextval, 'user2', '1234', '회원2', '000-0000-0000', 'Insert@Email.address', sysdate, 10);
  
 INSERT INTO member(memberno, id, passwd, nickname, tel, email, mdate, gradeno)
-VALUES (member_seq.nextval, 'user3', '1234', '회원3', '000-0000-0000', 'Insert@Email.address', sysdate, 10);
+VALUES (member_seq.nextval, 'user18', '1234', '회원18', '000-0000-0000', 'Insert@Email.address', sysdate, 10);
  
-
 
 COMMIT;
 
@@ -121,16 +120,12 @@ UPDATE member
 SET id='user29', nickname='회원29'
 WHERE memberno=29;
 
-UPDATE member 
-SET gradeno=1
-WHERE memberno=3;
-
 COMMIT;  
   
   
   5. 삭제
   1) 모두 삭제
---DELETE FROM member;
+DELETE FROM member;
  
   2) 특정 회원 삭제
 --DELETE FROM member
@@ -149,7 +144,7 @@ WHERE memberno=1 AND passwd='1234';
   2) 패스워드 수정
 UPDATE member
 SET passwd='0000'
-WHERE memberno=4;
+WHERE memberno=1;
 
 COMMIT;
  

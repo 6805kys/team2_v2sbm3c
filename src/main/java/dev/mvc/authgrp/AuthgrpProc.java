@@ -27,4 +27,22 @@ public class AuthgrpProc implements AuthgrpProcInter {
         return list;
     }
 
+    @Override
+    public AuthgrpVO read(int authno) {
+        AuthgrpVO authgrpVO = this.authgrpDAO.read(authno);
+        return authgrpVO;
+    }
+
+    @Override
+    public int update(AuthgrpVO authgrpVO) {
+        int cnt = this.authgrpDAO.update(authgrpVO);
+        return cnt;
+    }
+
+    @Override
+    public int delete(int authno) {
+        int cnt = this.authgrpDAO.delete(authno);
+        return cnt;
+    }
+
 }
