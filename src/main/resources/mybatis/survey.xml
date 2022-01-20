@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="dev.mvc.survey.SurveyDAOInter"> 
+  <!-- 연속 입력 지원 등록: sequence가 SQL 실행전에 생성되어 noticesVO에 저장 후 사용 -->
+  <insert id="create" parameterType="dev.mvc.survey.SurveyVO">
+    <selectKey keyProperty="ratingno" resultType="int" order="BEFORE">
+      SELECT rating_seq.nextval FROM dual
+    </selectKey>
+    
+     INSERT INTO rating(ratingno, memberno, breadno, rating)
+    VALUES(#{ratingno}, #{memberno}, #{breadno}, #{rating})
+  </insert>
+
+  </mapper>
+  

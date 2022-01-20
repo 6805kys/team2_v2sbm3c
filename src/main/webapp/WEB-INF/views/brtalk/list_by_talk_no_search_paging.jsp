@@ -94,7 +94,7 @@
      <%-- table 컬럼 --%>
      <thead>
       <tr>
-       <th style='text-align: center;'>작성자</th> 
+       <th style='text-align: center;'>회원 번호</th> 
        <th style='text-align: center;'>제목</th>
         <th style='text-align: center;'>등록일</th>
          <th style='text-align: center;'>수정일</th>
@@ -115,9 +115,9 @@
         <c:set var="talk_mdtime" value="${brtalkVO.talk_mdtime.substring(0, 10) }" />
         <c:set var="recom" value="${brtalkVO.recom }" />
         <c:set var="talk_view" value="${brtalkVO.talk_view }" />
-        
+        <c:set var="memberno" value="${brcontentVO.memberno }" />
 <tr> 
-          <td style='vertical-align: middle; text-align: center;'>${brtalkVO.talk_id}</td>
+          <td style='vertical-align: middle; text-align: center;'>${brtalkVO.memberno}</td>
           <td style='vertical-align: middle; text-align: center;'>
             <a href="./read.do?talk_no=${talk_no}"><strong>${talk_name}</a> 
           </td> 

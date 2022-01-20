@@ -8,6 +8,7 @@ import lombok.ToString;
 
 /*
         notice_no                            NUMBER(10)         NOT NULL         PRIMARY KEY,
+        adminno                       NUMBER(10)   NULL,
         notice_id                               VARCHAR2(15)         NOT NULL,
         notice_name VARCHAR(100) NOT NULL,
         notice_post                             CLOB                  NOT NULL,
@@ -28,6 +29,8 @@ import lombok.ToString;
 public class BrnoticeVO {
   /** 컨텐츠 번호 */
   private int notice_no;
+  /** 관리자 번호 */
+  private int adminno;
   /** 작성자ID */
   private String notice_id = "";
   /** 제목 */
@@ -38,8 +41,6 @@ public class BrnoticeVO {
   private int recom;
   /** 조회수 */
   private int notice_view = 0;
-  /** 댓글수 */
-  private int replycnt = 0;
   /** 패스워드 */
   private String passwd = "";
   /** 검색어 */
@@ -59,6 +60,13 @@ public class BrnoticeVO {
     public void setNotice_no(int notice_no) {
       this.notice_no = notice_no;
     }
+    
+    public int getAdminno() {
+        return adminno;
+      }
+      public void setMemberno(int adminno) {
+        this.adminno = adminno;
+      }
     
     public String getNotice_id() {
         return notice_id;
@@ -100,13 +108,6 @@ public class BrnoticeVO {
       this.notice_view = notice_view;
     }
 
-    public int getReplycnt() {
-      return replycnt;
-    }
-
-    public void setReplycnt(int replycnt) {
-      this.replycnt = replycnt;
-    }
 
     public String getPasswd() {
       return passwd;

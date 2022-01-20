@@ -18,21 +18,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       SELECT brcontent_seq.nextval FROM dual
     </selectKey>
     
-     INSERT INTO brcontent(content_no, content_id, content_name, content_post, passwd, content_word,
+     INSERT INTO brcontent(content_no, memberno, content_name, content_post, passwd, content_word,
                                      file1, file1saved, thumb1, size1, content_crtime, content_mdtime)
-    VALUES(brcontent_seq.nextval, #{content_id}, #{content_name}, #{content_post}, #{passwd}, #{content_word},
+    VALUES(brcontent_seq.nextval,  4, #{content_name}, #{content_post}, #{passwd}, #{content_word},
                 #{file1}, #{file1saved}, #{thumb1}, #{size1}, sysdate, sysdate)
   </insert>
   
     <!-- 일반적인 조회 -->
   <select id="read" resultType="dev.mvc.brcontent.BrcontentVO" parameterType="int">
-    SELECT content_no, content_id,  content_name, content_post, recom, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
+    SELECT content_no, memberno,  content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
     FROM brcontent
     WHERE content_no = #{content_no}
   </select>
   
   <select id="list_content_no_asc" resultType="dev.mvc.brcontent.BrcontentVO" parameterType="int">
-    SELECT content_no, content_id, content_name, content_post, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
+    SELECT content_no, memberno, content_name, content_post, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
     FROM brcontent 
     ORDER BY content_no ASC
   </select> 
@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 카테고리별 검색 목록 -->
   <select id="list_by_content_no_search" resultType="dev.mvc.brcontent.BrcontentVO" 
              parameterType="HashMap">
-     SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
+     SELECT content_no, memberno, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
     FROM brcontent
     <choose>
       <when test="content_word == null or content_word == ''"> <!-- 검색하지 않는 경우 -->
@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY content_no DESC   
   </select>
    
-  <!-- 카테고리별 검색 레코드 갯수 -->
+  <!-- 게시글별 검색 레코드 갯수 -->
   <select id="search_count" resultType="int" parameterType="HashMap">
     SELECT COUNT(*) as cnt
     FROM brcontent
@@ -69,14 +69,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </choose>
   </select>
   
-  <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
+  <!-- 게시글별 검색 목록 + 페이징 + 메인 이미지 -->   
   <select id="list_by_content_no_search_paging" 
              resultType="dev.mvc.brcontent.BrcontentVO" parameterType="HashMap">
-   SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, r
+   SELECT content_no, memberno, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, r
    FROM (
-              SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, rownum as r
+              SELECT content_no, memberno, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1, rownum as r
               FROM (
-                        SELECT content_no, content_id, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
+                        SELECT  content_no, memberno, content_name, content_post, recom, content_view, passwd, content_word, content_crtime, content_mdtime, file1, file1saved, thumb1, size1
                         FROM brcontent
                         <choose>
                           <when test="content_word == null or content_word == ''"> <!-- 검색하지 않는 경우 -->
@@ -132,12 +132,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE content_no = #{content_no}
   </update>
  
+ <!-- 조회수 증가 -->
  <update id="update_content_view" parameterType="int">
     UPDATE brcontent
     SET content_view = content_view + 1
     WHERE content_no = #{content_no}
   </update>
- 
+  
 </mapper> 
 
 

@@ -18,19 +18,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       SELECT brnotice_seq.nextval FROM dual
     </selectKey>
     
-     INSERT INTO brnotice(notice_no, notice_name,  notice_id, notice_post, passwd, notice_word, notice_crtime, notice_mdtime)
-    VALUES(brnotice_seq.nextval, #{notice_name}, #{notice_id}, #{notice_post}, #{passwd}, #{notice_word}, sysdate, sysdate)
+     INSERT INTO brnotice(notice_no, adminno, notice_name,  notice_post, passwd, notice_word, notice_crtime, notice_mdtime)
+    VALUES(brnotice_seq.nextval, 3, #{notice_name}, #{notice_post}, #{passwd}, #{notice_word}, sysdate, sysdate)
   </insert>
   
     <!-- 일반적인 조회 -->
   <select id="read" resultType="dev.mvc.brnotice.BrnoticeVO" parameterType="int">
-    SELECT notice_no, notice_name, notice_id, notice_post, recom, passwd, notice_word, notice_crtime, notice_mdtime
+    SELECT notice_no, adminno, notice_name, notice_post, recom, passwd, notice_word, notice_crtime, notice_mdtime
     FROM brnotice
     WHERE notice_no = #{notice_no}
   </select>
   
   <select id="list_notice_no_asc" resultType="dev.mvc.brnotice.BrnoticeVO" parameterType="int">
-    SELECT notice_no, notice_name, notice_id, notice_post, passwd, notice_word, notice_crtime, notice_mdtime
+    SELECT notice_no, adminno, notice_name, notice_post, passwd, notice_word, notice_crtime, notice_mdtime
     FROM brnotice 
     ORDER BY notice_no ASC
   </select> 
@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 카테고리별 검색 목록 -->
   <select id="list_by_notice_no_search" resultType="dev.mvc.brnotice.BrnoticeVO" 
              parameterType="HashMap">
-     SELECT notice_no, notice_name, notice_id, notice_post, recom, notice_view, passwd, notice_word, notice_crtime, notice_mdtime
+     SELECT notice_no, adminno, notice_name, notice_post, recom, notice_view, passwd, notice_word, notice_crtime, notice_mdtime
     FROM brnotice
     <choose>
       <when test="notice_word == null or notice_word == ''"> <!-- 검색하지 않는 경우 -->
@@ -70,11 +70,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
   <select id="list_by_notice_no_search_paging" 
              resultType="dev.mvc.brnotice.BrnoticeVO" parameterType="HashMap">
-   SELECT notice_no, notice_name, notice_id, notice_post, recom, notice_view, passwd, notice_word, notice_crtime, notice_mdtime, r
+   SELECT notice_no, adminno, notice_name, notice_post, recom, notice_view, passwd, notice_word, notice_crtime, notice_mdtime, r
    FROM (
-              SELECT notice_no, notice_name, notice_id, notice_post, recom, notice_view, passwd, notice_word, notice_crtime, notice_mdtime, rownum as r
+              SELECT notice_no, adminno, notice_name, notice_post, recom, notice_view, passwd, notice_word, notice_crtime, notice_mdtime, rownum as r
               FROM (
-                        SELECT notice_no, notice_name, notice_id, notice_post, recom, notice_view, passwd, notice_word, notice_crtime, notice_mdtime
+                        SELECT notice_no, adminno, notice_name, notice_post, recom, notice_view, passwd, notice_word, notice_crtime, notice_mdtime
                         FROM brnotice
                         <choose>
                           <when test="notice_word == null or notice_word == ''"> <!-- 검색하지 않는 경우 -->

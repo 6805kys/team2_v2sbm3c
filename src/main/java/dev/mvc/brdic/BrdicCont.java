@@ -175,6 +175,7 @@ public class BrdicCont {
       ModelAndView mav = new ModelAndView();
 
       BrdicVO brdicVO = this.brdicProc.read(dic_no);
+      int cnt = this.brdicProc.update_dic_view(dic_no);
       mav.addObject("brdicVO", brdicVO); // request.setAttribute("dicsVO", dicsVO);
       
       mav.setViewName("/brdic/read"); // /WEB-INF/views/dics/read.jsp

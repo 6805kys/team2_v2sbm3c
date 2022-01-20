@@ -18,19 +18,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       SELECT brtalk_seq.nextval FROM dual
     </selectKey>
     
-     INSERT INTO brtalk(talk_no, talk_name,  talk_id, talk_post, passwd, talk_word, talk_crtime, talk_mdtime)
-    VALUES(brtalk_seq.nextval, #{talk_name}, #{talk_id}, #{talk_post}, #{passwd}, #{talk_word}, sysdate, sysdate)
+     INSERT INTO brtalk(talk_no, memberno, talk_name,  talk_post, passwd, talk_word, talk_crtime, talk_mdtime)
+    VALUES(brtalk_seq.nextval, 4, #{talk_name}, #{talk_post}, #{passwd}, #{talk_word}, sysdate, sysdate)
   </insert>
   
     <!-- 일반적인 조회 -->
   <select id="read" resultType="dev.mvc.brtalk.BrtalkVO" parameterType="int">
-    SELECT talk_no, talk_name, talk_id, talk_post, recom, passwd, talk_word, talk_crtime, talk_mdtime
+    SELECT talk_no, memberno, talk_name, talk_post, recom, passwd, talk_word, talk_crtime, talk_mdtime
     FROM brtalk
     WHERE talk_no = #{talk_no}
   </select>
   
   <select id="list_talk_no_asc" resultType="dev.mvc.brtalk.BrtalkVO" parameterType="int">
-    SELECT talk_no, talk_name, talk_id, talk_post, passwd, talk_word, talk_crtime, talk_mdtime
+    SELECT talk_no, memberno, talk_name, talk_post, passwd, talk_word, talk_crtime, talk_mdtime
     FROM brtalk 
     ORDER BY talk_no ASC
   </select> 
@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 카테고리별 검색 목록 -->
   <select id="list_by_talk_no_search" resultType="dev.mvc.brtalk.BrtalkVO" 
              parameterType="HashMap">
-     SELECT talk_no, talk_name, talk_id, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime
+     SELECT talk_no, memberno, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime
     FROM brtalk
     <choose>
       <when test="talk_word == null or talk_word == ''"> <!-- 검색하지 않는 경우 -->
@@ -70,11 +70,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
   <select id="list_by_talk_no_search_paging" 
              resultType="dev.mvc.brtalk.BrtalkVO" parameterType="HashMap">
-   SELECT talk_no, talk_name, talk_id, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime, r
+   SELECT talk_no, memberno, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime, r
    FROM (
-              SELECT talk_no, talk_name, talk_id, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime, rownum as r
+              SELECT talk_no, memberno, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime, rownum as r
               FROM (
-                        SELECT talk_no, talk_name, talk_id, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime
+                        SELECT talk_no, memberno, talk_name, talk_post, recom, talk_view, passwd, talk_word, talk_crtime, talk_mdtime
                         FROM brtalk
                         <choose>
                           <when test="talk_word == null or talk_word == ''"> <!-- 검색하지 않는 경우 -->

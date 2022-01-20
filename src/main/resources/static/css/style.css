@@ -451,7 +451,9 @@
     float: left; 
     font-size: 1.5em;
   }
-  
+  td {
+  text-align:center;
+  }
     
   
   

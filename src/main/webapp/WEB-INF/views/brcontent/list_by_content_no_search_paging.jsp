@@ -97,7 +97,7 @@
      <%-- table 컬럼 --%>
      <thead>
       <tr>
-      <th style='text-align: center;'>작성자ID</th>
+      <th style='text-align: center;'>회원 번호</th>
        <th style='text-align: center;'>🍞포토글🍞</th> 
        <th style='text-align: center;'> </th>
         <th style='text-align: center;'>등록일</th>
@@ -113,7 +113,6 @@
     <tbody>
       <c:forEach var="brcontentVO" items="${list }">
         <c:set var="content_no" value="${brcontentVO.content_no }" />
-        <c:set var="content_id" value="${brcontentVO.content_id }" />
         <c:set var="thumb1" value="${brcontentVO.thumb1 }" />
         <c:set var="content_name" value="${brcontentVO.content_name }" />
         <c:set var="content_post" value="${brcontentVO.content_post }" />
@@ -121,9 +120,10 @@
         <c:set var="content_mdtime" value="${brcontentVO.content_mdtime.substring(0, 10) }" />
         <c:set var="recom" value="${brcontentVO.recom }" />
         <c:set var="content_view" value="${brcontentVO.content_view }" />
+        <c:set var="memberno" value="${brcontentVO.memberno }" />
         
 <tr> 
-          <td style='vertical-align: middle; text-align: center;'>${brcontentVO.content_id}</td>
+          <td style='vertical-align: middle; text-align: center;'>${brcontentVO.memberno}</td>
           <td style='vertical-align: middle; text-align: center;'>
             <c:choose>
               <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}">
