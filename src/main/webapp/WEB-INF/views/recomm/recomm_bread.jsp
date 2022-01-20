@@ -17,6 +17,16 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     
 <script type="text/javascript">
+    function recomm_bread(){
+        var url = 'http://localhost:8000/recommend_view/final/?memberno=${memberno} ';
+        var win = window.open(url, 'AI 서비스', 'width=700px, height=560px');
+
+        var x = (screen.width - 700) / 2;
+        var y = (screen.height - 560) / 2;
+
+        win.moveTo(x, y); // 화면 중앙으로 이동
+      }
+   
   $(function(){
   });
 </script>
@@ -40,9 +50,14 @@
         .td_radio_select {
             cursor: pointer;
         }
-        
+
         a.recomm_click {
         font-size: 20px;
+        text-decoration: none;
+        }
+        
+        a.recoom_click:after {
+        text-decoration: none;
         }
         
         a.recomm_click:hover {
@@ -62,7 +77,7 @@
     
     
     <div style="text-align: center; margin:150px auto;">
-    <a class="recomm_click" href="../recomm/final.do">🍞추천받은 빵 확인🍞</a>
+    <a class="recomm_click" href="javascript: recomm_bread()">🍞추천받은 빵 확인🍞</a>
     </div>
 </body>
  

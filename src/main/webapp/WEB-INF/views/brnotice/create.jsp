@@ -63,14 +63,6 @@
   
   <FORM name='frm' method='POST' action='./create.do' class="form-horizontal"
              enctype="multipart/form-data">
-    
-    <div class="form-group">
-       <label class="control-label col-md-2">작성자ID</label>
-       <div class="col-md-10">
-         <input type='text' name='notice_id' value='kd1' required="required" 
-                    class="form-control" style='width: 50%;'>
-       </div>
-    </div>   
     <div class="form-group">
        <label class="control-label col-md-2">제목</label>
        <div class="col-md-10">

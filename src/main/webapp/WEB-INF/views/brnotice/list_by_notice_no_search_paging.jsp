@@ -94,7 +94,7 @@
      <%-- table 컬럼 --%>
      <thead>
       <tr>
-       <th style='text-align: center;'>작성자</th> 
+       <th style='text-align: center;'>관리자 번호</th> 
        <th style='text-align: center;'>제목</th>
         <th style='text-align: center;'>등록일</th>
          <th style='text-align: center;'>수정일</th>
@@ -115,9 +115,10 @@
         <c:set var="notice_mdtime" value="${brnoticeVO.notice_mdtime.substring(0, 10) }" />
         <c:set var="recom" value="${brnoticeVO.recom }" />
         <c:set var="notice_view" value="${brnoticeVO.notice_view }" />
+        <c:set var="adminno" value="${brcontentVO.adminno }" />
         
 <tr> 
-          <td style='vertical-align: middle; text-align: center;'>${brnoticeVO.notice_id}</td>
+          <td style='vertical-align: middle; text-align: center;'>${brnoticeVO.adminno}</td>
           <td style='vertical-align: middle; text-align: center;'>
             <a href="./read.do?notice_no=${notice_no}"><strong>${notice_name}</a> 
           </td> 
