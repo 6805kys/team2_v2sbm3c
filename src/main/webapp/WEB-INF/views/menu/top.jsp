@@ -1,6 +1,18 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<head>
+<script>
+function chatting(){
+    var url =  href='http://127.0.0.1:8000/chatbot/chatting/';
+    var win = window.open(url, '챗봇', 'width=700px, height=630px');
 
+    var x = (screen.width - 700) / 2;
+    var y = (screen.height - 630) / 2;
+
+    win.moveTo(x, y); // 화면 중앙으로 이동
+  }
+</script>
+</head>
 <DIV class='container_main'> 
   <%-- 화면 상단 메뉴 --%>
   <DIV class='top_img'>
@@ -12,6 +24,7 @@
       <A class='menu_link'  href='/brcontent/list_by_content_no_search_paging.do'>🍞BEST포토존🍞</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/brtalk/list_by_talk_no_search_paging.do'>🍞HOT빵톡🍞</A><span class='top_menu_sep'> </span>      
       <A class='menu_link'  href='/brdic/list_by_dic_no_search_paging.do'>🍞빵 백과사전🍞</A><span class='top_menu_sep'> </span>
+      <A id="chatbot" class='menu_link'  href="javascript: chatting()">🍞챗봇🍞</A><span class='top_menu_sep'> </span>
       <c:choose>
         <c:when test="${sessionScope.id != null}"> <%-- 로그인 한 경우 --%>
             ${sessionScope.nickname } <A class='menu_link'  href='/member/mypage.do' >Mypage</A><span class='top_menu_sep'> </span>
