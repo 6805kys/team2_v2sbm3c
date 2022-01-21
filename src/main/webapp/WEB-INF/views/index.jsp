@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
+
 <title>Bread recommended http://localhost:9091</title>
 <!-- /static 기준 -->
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
@@ -14,6 +15,7 @@
  
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     
 </head>
 <body>
@@ -73,5 +75,3 @@
 </div>
 </body>
 </html>   -->
-
-

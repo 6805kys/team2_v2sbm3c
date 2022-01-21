@@ -99,6 +99,7 @@
           </LI>                                                                      
         </c:when>  
 
+
         <c:when test="${code == 'login_need'}"> <%-- Java if --%>
           <LI class='li_none'>
             <span class="span_fail">${param.nickname }님(${param.id }) 매니저 로그인이 필요합니다.</span>

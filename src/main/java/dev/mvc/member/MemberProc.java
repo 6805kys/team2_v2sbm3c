@@ -95,7 +95,9 @@ public class MemberProc implements MemberProcInter  {
       boolean sw = false; // 로그인하지 않은 것으로 초기화
       int gradeno = 999;
       
+      // System.out.println("-> gradeno: " + session.getAttribute("gradeno"));
       System.out.println("-> gradeno: " + session.getAttribute("gradeno"));
+
       if (session != null) {
         String id = (String)session.getAttribute("id");
         if (session.getAttribute("gradeno") != null) {
@@ -115,6 +117,7 @@ public class MemberProc implements MemberProcInter  {
       boolean sw = false; // 로그인하지 않은 것으로 초기화
       int gradeno = 999;
       
+      // System.out.println("-> gradeno: " + session.getAttribute("gradeno"));
       System.out.println("-> gradeno: " + session.getAttribute("gradeno"));
       if (session != null) {
         String id = (String)session.getAttribute("id");
