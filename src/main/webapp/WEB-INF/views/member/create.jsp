@@ -24,6 +24,7 @@
     $('#btn_close').on('click', setFocus); // Dialog창을 닫은후의 focus 이동
     $('#btn_send').on('click', send); 
   });
+  
 
   // jQuery ajax 요청
   function checkID() {
@@ -46,7 +47,7 @@
     } else {  // when ID is entered
       params = 'id=' + id;
       // var params = $('#frm').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
-      alert('params: ' + params);
+      // alert('params: ' + params);
 
       $.ajax({
         url: './checkID.do', // spring execute
@@ -56,7 +57,7 @@
         dataType: 'json', // 응답 형식: json, html, xml...
         data: params,      // 데이터
         success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
-          // alert(rdata);
+          //alert(rdata);
           var msg = "";
           
           if (rdata.cnt > 0) {
@@ -67,7 +68,7 @@
             $('#modal_content').attr('class', 'alert alert-success'); // Bootstrap CSS 변경
             msg = "사용 가능한 ID 입니다.";
             $('#btn_close').attr("data-focus", "passwd");  // passwd 입력으로 focus 이동
-            $.cookie('checkId', 'TRUE'); // Cookie 기록
+            // $.cookie('checkId', 'TRUE'); // Cookie 기록
           }
           
           $('#modal_title').html('ID 중복 확인');  // 제목 
@@ -81,6 +82,14 @@
       });
     }
   }
+  function setFocus() {  // focus 이동
+        // console.log('btn_close click!');
+        
+        var tag = $('#btn_close').attr('data-focus'); // data-focus 속성에 선언된 값을 읽음 
+        // console.log('tag: ' + tag);
+        
+        $('#' + tag).focus(); // data-focus 속성에 선언된 태그를 찾아서 포커스 이동
+      }
 
 
 
@@ -125,7 +134,7 @@
             } else {
               $('#modal_content').attr('class', 'alert alert-success'); // Bootstrap CSS 변경
               msg = "사용 가능한 닉네임 입니다.";
-              // $.cookie('checkId', 'TRUE'); // Cookie 기록
+              //$.cookie('checkId', 'TRUE'); // Cookie 기록
             }
             
             $('#modal_title').html('닉네임 중복 확인');  // 제목 
@@ -217,7 +226,7 @@
     <div class="form-group" style="margin-top: auto;">
       <label for="id" class="col-md-5 control-label" style='font-size: 0.9em;'>ID</label>
       <div class="col-md-5">
-            <input type='text' class="form-control" name='id' id='id' value='' required="required" style='width: 40%;' placeholder="아이디" autofocus="autofocus">
+            <input type='text' class="form-control" name='id' id='id' value='' maxlength="20" required="required" style='width: 40%;' placeholder="아이디(한글 제외 20자 이내)" autofocus="autofocus">
             <button type='button' id="btn_checkID" class="btn btn-info btn-md">중복확인</button>
             <SPAN id='id_span'></SPAN> <!-- ID 중복 관련 메시지 -->
       </div>
@@ -226,21 +235,21 @@
     <div class="form-group">
         <label for="passwd" class="col-md-5 control-label" style='font-size: 0.9em;'>Password</label>
         <div class="col-md-5">
-            <input type='password' class="form-control" name='passwd' id='passwd' value='' required="required" style='width: 40%;' placeholder="패스워드">
+            <input type='password' class="form-control" name='passwd' id='passwd' value='' maxlength="17" required="required" style='width: 40%;' placeholder="패스워드">
         </div>
     </div>
 
     <div class="form-group">
         <label for="passwd2" class="col-md-5 control-label" style='font-size: 0.9em;'>Re-enter password</label>
         <div class="col-md-5">
-            <input type='password' class="form-control" name='passwd2' id='passwd2' value='' required="required" style='width: 40%;' placeholder="패스워드확인">
+            <input type='password' class="form-control" name='passwd2' id='passwd2' value='' maxlength="17" required="required" style='width: 40%;' placeholder="패스워드확인">
         </div>
     </div>
 
     <div class="form-group" style="margin-bottom: auto;">
         <label for="nickname" class="col-md-5 control-label" style='font-size: 0.9em;'>Nickname</label>
         <div class="col-md-5">
-            <input type='text' class="form-control" name='nickname' id='nickname' value='' required="required" style='width: 40%;' placeholder="닉네임">
+            <input type='text' class="form-control" name='nickname' id='nickname' value='' maxlength="10" required="required" style='width: 40%;' placeholder="닉네임(한글 포함 10자 이내)">
             <button type='button' id="btn_checkNICKNAME" class="btn btn-info btn-md">중복확인</button>
             <SPAN id='nickname_span'></SPAN> <!-- NICKNAME 중복 관련 메시지 -->
         </div>
