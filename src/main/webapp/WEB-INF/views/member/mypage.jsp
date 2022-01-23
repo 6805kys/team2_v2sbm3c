@@ -44,9 +44,11 @@
         
           <div class="panel panel-warning">
             <div class="panel-heading">빵파고 프로필</div>
-            <div class="panel-body">          
+            <div class="panel-body">
+
               <p>빵파고에서 '나'를 표현하는 프로필 정보입니다.<br>수정화면에서 프로필 사진과 닉네임을 변경하세요.</p>
               <TABLE class="table table-condensed" style='width: 100%;'>
+
                 <colgroup>
                   <col style='width: 30%;'/>
                   <col style='width: 35%;'/>
@@ -57,24 +59,18 @@
                   <TH class='th_bs'>아이디</TH>
                   <TH class='th_bs'>닉네임</TH>
                 </TR>
+                <%-- table 내용 --%>
                 <TR>
                   <TH class='th_bs'>[사진]</TH>
-                  <TH class='th_bs'>아이디</TH>
-                  <td class='th_bs'>nickname 출력 셀</td>
+                  <TH class='th_bs'>${memberVO.id }</TH>
+                  <TH class='th_bs'>${memberVO.nickname }</TH>
                 </TR>
-                <!--수정 필요-->
-                <!-- <c:forEach var="memberVO" items="${list }">
-                  <c:set var="id" value ="${memberVO.id}" />
-                  <c:set var="nickname" value ="${memberVO.nickname}" />
-                    
-                  <TR>
-                    <TD class='td_basic'>${id}</TD>
-                    <TD class='td_basic'>${nickname}</TD>
-                  </TR>
-                </c:forEach> -->
+
               </TABLE>
               <DIV class='bottom_menu'>
-                <A href="./read.do?memberno=${memberno}"><IMG src='/member/images/update.png' title='수정'></A>
+                <button type="button" onclick="location.href='./read.do?memberno=${memberno}'" class="btn btn-danger">🍞 수정 🍞</button>
+                <%-- <A href="./read.do?memberno=${memberno}"><IMG src='/member/images/update.png' title='수정'></A> --%>
+                <%-- <A href="./read.do?memberno=${memberno}">수정</A> --%>
               </DIV>
             </div>
           </div>
@@ -96,22 +92,32 @@
                 </TR>
 
                 <TR>
-                  <td class='th_bs'>email 출력 셀</td>
-                  <td class='th_bs'>tel 출력 셀</td>
+                  <td class='th_bs'>
+                    <c:choose>
+                      <c:when test="${memberVO.email.length() > 10 }"> <!-- 긴 이메일 처리 -->
+                        ${memberVO.email.substring(0, 10) }...
+                      </c:when>
+                      <c:otherwise>
+                         ${memberVO.email}
+                      </c:otherwise>
+                    </c:choose>
+                  </td>
+                  
+                  <td class='th_bs'>
+                    <c:choose>
+                      <c:when test="${memberVO.tel.length() > 9 }"> <!-- 긴 이메일 처리 -->
+                        ${memberVO.tel.substring(0, 9) }...
+                      </c:when>
+                      <c:otherwise>
+                         ${memberVO.tel}
+                      </c:otherwise>
+                    </c:choose>
+                  </td>
                 </TR>
-                <!--수정 필요-->
-                <!-- <c:forEach var="memberVO" items="${list }">
-                  <c:set var="email" value ="${memberVO.email}" />
-                  <c:set var="tel" value ="${memberVO.tel}" />
-                    
-                  <TR>
-                    <TD class='td_basic'>${email}</TD>
-                    <TD class='td_basic'>${tel}</TD>
-                  </TR>
-                </c:forEach> -->
+
               </TABLE>
               <DIV class='bottom_menu'>
-                <A href="./read.do?memberno=${memberno}"><IMG src='/member/images/update.png' title='수정'></A>
+                <button type="button" onclick="location.href='./read.do?memberno=${memberno}'" class="btn btn-danger">🍞 수정 🍞</button>
               </DIV>
 
             </div>
@@ -122,6 +128,9 @@
                       <p>빵파고에서 빵을 추천받기 위한 취향정보입니다.<br>
                           설문조사를 통해 나만의 빵을 추천 받아보세요.</p>
             </div>
+            <DIV class='bottom_menu'>
+                <button type="button" onclick="location.href='../survey/create.do'" class="btn btn-danger">🍞 빵추 🍞</button>
+            </DIV>
           </div>
           
           <div class="panel panel-warning">

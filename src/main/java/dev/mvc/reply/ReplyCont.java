@@ -18,14 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import dev.mvc.member.MemberProc;
 import dev.mvc.member.MemberVO;
 
-<<<<<<< HEAD
+
 //Controller
-=======
-<<<<<<< HEAD
-//Controller
-=======
->>>>>>> c21d9f4407c46393cf320e6ba6f4eea98e86b08b
->>>>>>> 76914553a87cb123855b5ee83c1bb6281e88a3d0
 @Controller
 public class ReplyCont {
   @Autowired
