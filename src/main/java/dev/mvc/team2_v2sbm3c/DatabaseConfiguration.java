@@ -18,9 +18,27 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")  // 설정 파일 위치
+<<<<<<< HEAD
+
+@MapperScan(basePackages= {"dev.mvc.team2_v2sbm3c", "dev.mvc.brpost", "dev.mvc.brcontent", "dev.mvc.brdic", "dev.mvc.brtalk", "dev.mvc.brnotice",
+<<<<<<< HEAD
+                                            "dev.mvc.member", "dev.mvc.authgrp", "dev.mvc.auth_info", "dev.mvc.survey", "dev.mvc.recomm", "dev.mvc.reply"})
+=======
+<<<<<<< HEAD
+                                            "dev.mvc.member", "dev.mvc.authgrp", "dev.mvc.auth_info", "dev.mvc.survey", "dev.mvc.recomm", "dev.mvc.reply"})
+=======
+                                            "dev.mvc.member", "dev.mvc.authgrp", "dev.mvc.auth_info", "dev.mvc.survey", "dev.mvc.recomm"})
+=======
+<<<<<<< Updated upstream
+@MapperScan(basePackages= {"dev.mvc.team2_v2sbm3c", "dev.mvc.brpost", "dev.mvc.brcontent", "dev.mvc.brdic", "dev.mvc.brtalk", "dev.mvc.brnotice"})
+=======
 
 @MapperScan(basePackages= {"dev.mvc.team2_v2sbm3c", "dev.mvc.brpost", "dev.mvc.brcontent", "dev.mvc.brdic", "dev.mvc.brtalk", "dev.mvc.brnotice",
                                             "dev.mvc.member", "dev.mvc.authgrp", "dev.mvc.auth_info", "dev.mvc.survey", "dev.mvc.recomm", "dev.mvc.reply"})
+>>>>>>> Stashed changes
+>>>>>>> sunghyun
+>>>>>>> c21d9f4407c46393cf320e6ba6f4eea98e86b08b
+>>>>>>> 76914553a87cb123855b5ee83c1bb6281e88a3d0
 public class DatabaseConfiguration {
     
     @Autowired

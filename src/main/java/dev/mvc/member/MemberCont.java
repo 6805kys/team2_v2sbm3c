@@ -95,7 +95,7 @@ public class MemberCont {
       
       if (cnt == 1) {
         mav.addObject("code", "create_success");
-        mav.addObject("Nickname", memberVO.getNickname());  // 홍길동님(user4) 회원 가입을 축하합니다.
+        mav.addObject("nickname", memberVO.getNickname());  // 홍길동님(user4) 회원 가입을 축하합니다.
         mav.addObject("id", memberVO.getId());
       } else {
         mav.addObject("code", "create_fail");
@@ -550,7 +550,7 @@ public class MemberCont {
             mav.setViewName("/member/list"); // /webapp/WEB-INF/views/member/list.jsp
            
           } else {
-            mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
+            mav.addObject("url", "/member/login_need"); // login_need.jsp, redirect parameter 적용
             
             mav.setViewName("redirect:/member/msg.do");      
           }
@@ -577,9 +577,12 @@ public class MemberCont {
           
           if(this.memberProc.isMember(session)) {
               mav.addObject("memberVO", memberVO);
+              List<MemberVO> list = memberProc.list();
+              mav.addObject("list", list);
+              
               mav.setViewName("/member/mypage"); // /member/mypage.jsp
           } else {
-              mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
+              mav.addObject("url", "/member/login_need"); // login_need.jsp, redirect parameter 적용
               
               mav.setViewName("redirect:/member/msg.do");    
           }
