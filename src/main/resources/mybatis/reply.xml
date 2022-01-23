@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "dev.mvc.reply.ReplyDAOInter">
+  <insert id="create">
+    INSERT INTO reply(replyno, content_no, memberno, reply_content, passwd, reply_crtime)
+    VALUES(reply_seq.nextval, #{content_no}, #{memberno}, #{reply_content}, #{passwd}, sysdate)
+  </insert>
+  
+  <select id="list" resultType="dev.mvc.reply.ReplyVO">
+    SELECT replyno, content_no, memberno, reply_content, passwd, reply_crtime
+    FROM reply
+    ORDER BY replyno DESC
+  </select>
+  
+  <select id="list_member_join" resultType="dev.mvc.reply.ReplyMemberVO">
+    SELECT m.id,
+              r.replyno, r.content_no, r.memberno, r.reply_content, r.passwd, r.reply_crtime
+    FROM member m,  reply r
+    WHERE m.memberno = r.memberno
+    ORDER BY r.replyno DESC
+  </select>
+
+  <select id="list_by_content_no" resultType="dev.mvc.reply.ReplyVO" parameterType="int">
+    SELECT replyno, content_no, memberno, reply_content, passwd, reply_crtime
+    FROM reply
+    WHERE content_no=#{content_no}
+    ORDER BY replyno DESC
+  </select>
+
+  <select id="list_by_content_no_join" resultType="dev.mvc.reply.ReplyMemberVO" parameterType="int">
+    SELECT m.id, r.replyno, r.content_no, r.memberno, r.reply_content, r.passwd, r.reply_crtime
+    FROM member m,  reply r
+    WHERE (m.memberno = r.memberno) AND r.content_no=#{content_no}
+    ORDER BY r.replyno DESC
+  </select>
+  
+  <!-- <select id="checkPasswd" parameterType="HashMap" resultType="int"> -->
+  <!-- <select id="checkPasswd" parameterType="ReplyVO" resultType="int"> -->
+  <select id="checkPasswd" parameterType="Map" resultType="int">
+    SELECT COUNT(*) as cnt
+    FROM reply
+    WHERE replyno=#{replyno} AND passwd=#{passwd}
+  </select>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM reply
+    WHERE replyno=#{replyno}
+  </delete>
+    
+</mapper> 
+

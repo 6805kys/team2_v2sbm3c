@@ -3,7 +3,7 @@
 /**********************************/
 CREATE TABLE brtalk(
         talk_no    INT     NOT NULL     PRIMARY KEY,
-        memberno                       NUMBER(10)   NULL ,
+        memberno                       NUMBER(10)   NOT NULL ,
         talk_name VARCHAR(1000) NOT NULL,
         talk_post      CLOB         NOT NULL,
         recom NUMERIC(7) DEFAULT 0 NOT NULL,

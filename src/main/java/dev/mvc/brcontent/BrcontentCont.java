@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
@@ -171,7 +172,7 @@ public class BrcontentCont {
      * @return
      */
     @RequestMapping(value="/brcontent/read.do", method=RequestMethod.GET )
-    public ModelAndView read(int content_no) {
+    public ModelAndView read_ajax(HttpServletRequest request, int content_no) {
       ModelAndView mav = new ModelAndView();
       
 
@@ -183,7 +184,41 @@ public class BrcontentCont {
       
       mav.addObject("brcontentVO", brcontentVO); // request.setAttribute("contentsVO", contentsVO);
       mav.addObject("content_no", content_no);
-      mav.setViewName("/brcontent/read"); // /WEB-INF/views/contents/read.jsp   
+    // mav.setViewName("/brcontent/read"); // /WEB-INF/views/contents/read.jsp   
+      // 댓글 기능 추가 
+      mav.setViewName("/brcontent/read_cookie_reply"); // /WEB-INF/views/contents/read_cookie_reply.jsp
+     
+      Cookie[] cookies = request.getCookies();
+      Cookie cookie = null;
+
+      String ck_id = ""; // id 저장
+      String ck_id_save = ""; // id 저장 여부를 체크
+      String ck_passwd = ""; // passwd 저장
+      String ck_passwd_save = ""; // passwd 저장 여부를 체크
+
+      if (cookies != null) {  // Cookie 변수가 있다면
+        for (int i=0; i < cookies.length; i++){
+          cookie = cookies[i]; // 쿠키 객체 추출
+          
+          if (cookie.getName().equals("ck_id")){
+            ck_id = cookie.getValue();                                 // Cookie에 저장된 id
+          }else if(cookie.getName().equals("ck_id_save")){
+            ck_id_save = cookie.getValue();                          // Cookie에 id를 저장 할 것인지의 여부, Y, N
+          }else if (cookie.getName().equals("ck_passwd")){
+            ck_passwd = cookie.getValue();                          // Cookie에 저장된 password
+          }else if(cookie.getName().equals("ck_passwd_save")){
+            ck_passwd_save = cookie.getValue();                  // Cookie에 password를 저장 할 것인지의 여부, Y, N
+          }
+        }
+      }
+      
+      System.out.println("-> ck_id: " + ck_id);
+      
+      mav.addObject("ck_id", ck_id); 
+      mav.addObject("ck_id_save", ck_id_save);
+      mav.addObject("ck_passwd", ck_passwd);
+      mav.addObject("ck_passwd_save", ck_passwd_save);
+      // -------------------------------------------------------------------------------
       
       return mav;
     }
