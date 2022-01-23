@@ -2,8 +2,8 @@
 /* Table Name: BEST포토존 */
 /**********************************/
 CREATE TABLE brcontent(
-    content_no                            NUMBER(10)         NOT NULL         PRIMARY KEY,
-    memberno                       NUMBER(10)   NULL ,
+    content_no                           INT         NOT NULL         PRIMARY KEY,
+    memberno                       NUMBER(10)   NOT NULL ,
         content_name VARCHAR(100) NOT NULL,
         content_post                             CLOB                  NOT NULL,
         recom                                 NUMBER(7)         DEFAULT 0         NOT NULL,
@@ -20,6 +20,8 @@ CREATE TABLE brcontent(
          );
          
          DROP TABLE brcontent CASCADE CONSTRAINTS;
+         
+         
          
 COMMENT ON TABLE brcontent is 'BEST포토존';
 COMMENT ON COLUMN brcontent.content_no is 'BEST포토존글 번호';
@@ -57,6 +59,8 @@ VALUES (brcontent_seq.nextval, 4 , '당동 백갤러리 닭가슴살 샌드위�
 야채와 닭가슴살을 와그작 와그작', 0, 0, 1234, '#닭가슴살 샌드위치 #샌드위치 맛집 #당동 카페 # 백갤러리 카페', '백카페.jpg', '백카페.jpg', '백카페.jpg', 561990, sysdate, sysdate);
 
 commit;
+
+SELECT * FROM brcontent;
 
 -- R(List)
 SELECT content_no, memberno, content_name, content_post, content_view, recom, passwd, content_word,

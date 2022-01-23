@@ -3,7 +3,7 @@
 /**********************************/
 CREATE TABLE brnotice(
         notice_no INT NOT NULL PRIMARY KEY,
-        adminno                       NUMBER(10)   NULL ,
+        adminno                       NUMBER(10)   NOT NULL ,
         notice_name VARCHAR(1000) NOT NULL,
         notice_post CLOB NOT NULL,
         recom NUMERIC(7) DEFAULT 0 NOT NULL,

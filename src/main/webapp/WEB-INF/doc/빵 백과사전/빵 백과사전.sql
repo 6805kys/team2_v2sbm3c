@@ -3,7 +3,7 @@
 /**********************************/
 CREATE TABLE brdic(
         dic_no INT NOT NULL PRIMARY KEY,
-        adminno                       NUMBER(10)   NULL,
+        adminno                       NUMBER(10)   NOT NULL,
         dic_name VARCHAR(1000) NOT NULL,
         dic_post CLOB NOT NULL,
         recom NUMERIC(7) DEFAULT 0 NOT NULL,
@@ -72,7 +72,7 @@ ORDER BY dic_no;
 -- R(Read)
 SELECT dic_no, adminno, dic_name, dic_post, dic_view, recom, passwd, dic_word, file1, file1saved, thumb1, size1, dic_crtime, dic_mdtime
 FROM brdic
-WHERE dic_no=27;
+WHERE dic_no=37;
       
 -- 게시글별 검색어를 통한 검색 레코드
 SELECT dic_no, adminno, dic_name, dic_post, recom, dic_view, passwd, dic_word, dic_crtime, dic_mdtime, file1, file1saved, thumb1, size1
