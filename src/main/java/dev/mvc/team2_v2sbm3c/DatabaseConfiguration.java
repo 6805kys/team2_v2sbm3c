@@ -18,7 +18,9 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")  // 설정 파일 위치
-@MapperScan(basePackages= {"dev.mvc.team2_v2sbm3c"})
+@MapperScan(basePackages= {"dev.mvc.team2_v2sbm3c", "dev.mvc.brpost", "dev.mvc.brcontent", "dev.mvc.brdic", "dev.mvc.brtalk", "dev.mvc.brnotice",
+                                            "dev.mvc.member", "dev.mvc.authgrp", "dev.mvc.auth_info", "dev.mvc.survey", "dev.mvc.recomm", "dev.mvc.reply"})
+
 public class DatabaseConfiguration {
     
     @Autowired
@@ -52,4 +54,3 @@ public class DatabaseConfiguration {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }
-
