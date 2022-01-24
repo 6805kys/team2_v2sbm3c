@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.tag.TagDAOInter">
+
+  <!-- 조회, id: read, 입력: bakeryno, 리턴: CateVO -->
+  <select id="list_by_bakeryno" resultType="dev.mvc.tag.TagVO" parameterType="int">
+    SELECT tagno, tag 
+    FROM tag
+    WHERE bakeryno = #{bakeryno}
+  </select>
+
+ 
+</mapper>

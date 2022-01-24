@@ -1,0 +1,83 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+ 
+<!DOCTYPE html> 
+<html lang="ko"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
+<title>빵추</title>
+ 
+<link href="/css/style.css" rel="Stylesheet" type="text/css">
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    
+<script type="text/javascript">
+</script>
+
+ 
+</head> 
+
+<body>
+<jsp:include page="../menu/top.jsp" flush='false' />
+  <DIV style="text-align: right; clear: both;">  
+    <form name='frm' id='frm' method='get' action='./list_by_search_paging.do'>
+
+      <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
+      <button type='submit'>검색</button>
+      <c:if test="${param.word.length() > 0 }">
+        <button type='button' 
+                     onclick="location.href='./list_by_search_paging.do?word='">검색 취소</button>  
+      </c:if>    
+    </form>
+  </DIV>
+<DIV class='content_body'>
+  <TABLE class='table table-striped'>
+    <colgroup>
+      <col style='width: 20%;'/>
+      <col style='width: 10%;'/>
+      <col style='width: 35%;'/>
+      <col style='width: 15%;'/>    
+      <col style='width: 20%;'/>
+    </colgroup>
+   
+    <thead>  
+    <TR>
+      <TH class="th_bs">빵집 이름</TH>
+      <TH class="th_bs">평점</TH>
+      <TH class="th_bs">주소</TH>
+      <TH class="th_bs">역</TH>
+      <TH class="th_bs">시그니쳐</TH>
+    </TR>
+    </thead>
+    
+    <tbody>
+    <c:forEach var="bakeryVO" items="${list}">
+      <input type='hidden' name='bakeryno' value='${bakeryVO.bakeryno }'>
+      <c:set var="bakery" value="${bakeryVO.bakery }" />
+      <c:set var="rating" value="${bakeryVO.rating }" />
+      <c:set var="address" value="${bakeryVO.address }" />
+      <c:set var="station" value="${bakeryVO.station}" />
+      <c:set var="signature" value="${bakeryVO.signature }" />
+      
+      <TR>
+        <TD class="td_bs"><A href="./read.do?bakeryno=${bakeryVO.bakeryno }">${bakery }</A></TD>
+        <TD class="td_bs">${rating }</TD>
+        <TD class="td_bs">${address }</TD>
+        <TD class="td_bs">${station }</TD>
+        <TD class="td_bs">${signature }</TD>
+
+      </TR>   
+    </c:forEach> 
+    </tbody>
+   
+  </TABLE>
+  <DIV class='bottom_menu'>${paging }</DIV>
+</DIV>
+<jsp:include page="../menu/bottom.jsp" flush='false' />
+</body>
+ 
+</html>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.bakery.BakeryDAOInter">
+
+  <!-- 조회, id: read, 입력: bakeryno, 리턴: CateVO -->
+  <select id="read" resultType="dev.mvc.bakery.BakeryVO" parameterType="int">
+    SELECT bakery, telephone, address, station, rating, signature, breadgrpno 
+    FROM bakery 
+    WHERE bakeryno = #{bakeryno}
+  </select>
+
+
+ <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
+  <select id="list_by_search_paging" 
+             resultType="dev.mvc.bakery.BakeryVO" parameterType="HashMap">
+   SELECT bakeryno, bakery, rating, address, station, signature, r
+   FROM (SELECT bakeryno, bakery, rating, address, station, signature, rownum as r
+         FROM ( SELECT bakeryno, bakery, rating, address, station, signature
+                FROM bakery
+                     <choose>
+                          <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
+                            
+                          </when>
+                          <otherwise> 
+                             WHERE (bakery LIKE '%' || #{word} || '%'  <!-- ||: 결합, %첫눈% -->
+                                    OR address LIKE '%' || #{word} || '%' 
+                                    OR signature LIKE '%' || #{word} || '%' 
+                                    OR station LIKE '%' || #{word} || '%')
+                          </otherwise>
+                     </choose>
+                 ORDER BY rating DESC
+               )
+        )
+    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]>
+     
+<!--  1 page: WHERE r >= 1 AND r <= 10; 
+       2 page: WHERE r >= 11 AND r <= 20;
+       3 page: WHERE r >= 21 AND r <= 30; -->
+     
+  </select>   
+  
+    <!-- 카테고리별 검색 레코드 갯수 -->
+  <select id="search_count" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt
+    FROM bakery
+    <choose>
+      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+        WHERE (bakery LIKE '%' || #{word} || '%'  <!-- ||: 결합, %첫눈% -->
+               OR address LIKE '%' || #{word} || '%' 
+               OR signature LIKE '%' || #{word} || '%' 
+               OR station LIKE '%' || #{word} || '%')
+      </when>
+    </choose>
+  </select>   
+  
+  
+</mapper>

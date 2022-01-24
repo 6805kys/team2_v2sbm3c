@@ -24,6 +24,7 @@ function chatting(){
       <A class='menu_link'  href='/brcontent/list_by_content_no_search_paging.do'>🍞BEST포토존🍞</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/brtalk/list_by_talk_no_search_paging.do'>🍞HOT빵톡🍞</A><span class='top_menu_sep'> </span>      
       <A class='menu_link'  href='/brdic/list_by_dic_no_search_paging.do'>🍞빵 백과사전🍞</A><span class='top_menu_sep'> </span>
+      <A class='menu_link'  href='/bakery/list_by_search_paging.do'>🍞빵집 추천🍞</A><span class='top_menu_sep'> </span>
       <A id="chatbot" class='menu_link'  href="javascript: chatting()">🍞챗봇🍞</A><span class='top_menu_sep'> </span>
       <c:choose>
         <c:when test="${sessionScope.id != null}"> <%-- 로그인 한 경우 --%>
