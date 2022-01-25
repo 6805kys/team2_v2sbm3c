@@ -61,7 +61,7 @@
                 </TR>
                 <%-- table 내용 --%>
                 <TR>
-                  <TH class='th_bs'>[사진]</TH>
+                  <TH class='th_bs'><IMG src='/member/images/profile_img.jpg' width="100" height="100" title='기본 프로필'><br>[수정]</TH>
                   <TH class='th_bs'>${memberVO.id }</TH>
                   <TH class='th_bs'>${memberVO.nickname }</TH>
                 </TR>
