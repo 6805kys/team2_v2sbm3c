@@ -26,7 +26,7 @@ public class BakeryVO {
   /** 빵집 이름 */
   private String bakery = "";
   /** 빵집 전화번호 */
-  private int telephone;
+  private String telephone;
   /** 빵집 주소 */
   private String address;
   /** 빵집 역 */
