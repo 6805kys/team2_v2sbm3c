@@ -544,10 +544,10 @@ public class BrcontentCont {
             boolean sw = false;
             
             // 완성된 경로 F:/ai8/ws_frame/resort_v1sbm3a/src/main/resources/static/contents/storage/
-            String upDir =  System.getProperty("user.dir") + "/src/main/resources/static/brcontent/storage/"; // 절대 경로
+            // String upDir =  System.getProperty("user.dir") + "/src/main/resources/static/brcontent/storage/"; // 절대 경로
 
-            sw = Tool.deleteFile(upDir, file1saved);  // Folder에서 1건의 파일 삭제
-            sw = Tool.deleteFile(upDir, thumb1);     // Folder에서 1건의 파일 삭제
+            sw = Tool.deleteFile(uploadDir, file1saved);  // Folder에서 1건의 파일 삭제
+            sw = Tool.deleteFile(uploadDir, thumb1);     // Folder에서 1건의 파일 삭제
             // System.out.println("sw: " + sw);
             // -------------------------------------------------------------------
             // 파일 삭제 종료 시작
