@@ -61,7 +61,7 @@ public class ReplyCont {
     } else {
       mav.addObject("return_url", "/reply/list.do"); // 로그인 후 이동할 주소 ★
       
-      mav.setViewName("redirect:/member/login.do"); // /WEB-INF/views/member/login_ck_form.jsp
+      mav.setViewName("redirect:/member/login_ck_form.do"); // /WEB-INF/views/member/login_ck_form.jsp
     }
     
     return mav;

@@ -418,10 +418,10 @@ public class BrcontentCont {
             boolean sw = false;
             
             // 완성된 경로 F:/ai8/ws_frame/resort_v1sbm3a/src/main/resources/static/contents/storage/
-            String upDir =  System.getProperty("user.dir") + "/src/main/resources/static/brcontent/storage/"; // 절대 경로
+            // String upDir =  System.getProperty("user.dir") + "/src/main/resources/static/brcontent/storage/"; // 절대 경로
 
-            sw = Tool.deleteFile(upDir, file1saved);  // Folder에서 1건의 파일 삭제
-            sw = Tool.deleteFile(upDir, thumb1);     // Folder에서 1건의 파일 삭제
+            sw = Tool.deleteFile(uploadDir, file1saved);  // Folder에서 1건의 파일 삭제
+            sw = Tool.deleteFile(uploadDir, thumb1);     // Folder에서 1건의 파일 삭제
             // System.out.println("sw: " + sw);
             // -------------------------------------------------------------------
             // 파일 삭제 종료 시작
@@ -445,11 +445,11 @@ public class BrcontentCont {
             
             if (size1 > 0) { // 파일 크기 체크
               // 파일 저장 후 업로드된 파일명이 리턴됨, spring.jsp, spring_1.jpg...
-              file1saved = Upload.saveFileSpring(mf, upDir); 
+              file1saved = Upload.saveFileSpring(mf, uploadDir); 
               
               if (Tool.isImage(file1saved)) { // 이미지인지 검사
                 // thumb 이미지 생성후 파일명 리턴됨, width: 250, height: 200
-                thumb1 = Tool.preview(upDir, file1saved, 250, 200); 
+                thumb1 = Tool.preview(uploadDir, file1saved, 250, 200); 
               }
               
             } else { // 파일이 삭제만 되고 새로 올리지 않는 경우
